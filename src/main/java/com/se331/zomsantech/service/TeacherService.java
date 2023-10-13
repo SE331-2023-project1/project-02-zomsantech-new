@@ -14,5 +14,5 @@ public interface TeacherService {
 
     Teacher getTeacher(Long id);
 
-    Teacher save(Teacher student);
+    Teacher save(Teacher teacher);
 }
