@@ -17,14 +17,16 @@ import org.springframework.web.server.ResponseStatusException;
 @RequiredArgsConstructor
 public class StudentController {
     final StudentService studentService;
+
     @GetMapping("students")
     public ResponseEntity<?> getStudentLists(@RequestParam(value = "_limit", required = false) Integer perPage,
-                                           @RequestParam(value = "_page", required = false) Integer page) {
+            @RequestParam(value = "_page", required = false) Integer page) {
         Page<Student> pageOutput = studentService.getStudents(perPage, page);
         HttpHeaders responseHeader = new HttpHeaders();
         responseHeader.set("x-total-count", String.valueOf(pageOutput.getTotalElements()));
-        return new ResponseEntity<>(pageOutput.getContent(),responseHeader,HttpStatus.OK);
+        return new ResponseEntity<>(pageOutput.getContent(), responseHeader, HttpStatus.OK);
     }
+
     @GetMapping("students/{id}")
     public ResponseEntity<?> getStudent(@PathVariable("id") Long id) {
         Student output = studentService.getStudent(id);
