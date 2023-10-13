@@ -2,6 +2,7 @@ package com.se331.zomsantech.controller;
 
 import com.se331.zomsantech.entity.Teacher;
 import com.se331.zomsantech.service.TeacherService;
+import com.se331.zomsantech.util.LabMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
@@ -23,13 +24,13 @@ public class TeacherController {
         Page<Teacher> pageOutput = teacherService.getTeachers(perPage, page);
         HttpHeaders responseHeader = new HttpHeaders();
         responseHeader.set("x-total-count", String.valueOf(pageOutput.getTotalElements()));
-        return new ResponseEntity<>(pageOutput.getContent(),responseHeader, HttpStatus.OK);
+        return new ResponseEntity<>(LabMapper.INSTANCE.getTeacherDTO(pageOutput.getContent()),responseHeader, HttpStatus.OK);
     }
     @GetMapping("teachers/{id}")
     public ResponseEntity<?> getTeacher(@PathVariable("id") Long id) {
         Teacher output = teacherService.getTeacher(id);
         if (output != null) {
-            return ResponseEntity.ok(output);
+            return ResponseEntity.ok(LabMapper.INSTANCE.getTeacherDTO(output));
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given id is not found");
         }

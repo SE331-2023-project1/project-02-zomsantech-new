@@ -4,13 +4,15 @@ import com.se331.zomsantech.entity.Student;
 import com.se331.zomsantech.entity.StudentDTO;
 import com.se331.zomsantech.entity.StudentTeacherDTO;
 import com.se331.zomsantech.entity.Teacher;
+import com.se331.zomsantech.entity.TeacherDTO;
+import com.se331.zomsantech.entity.TeacherOwnStudentDTO;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-10-13T21:58:15+0700",
+    date = "2023-10-13T22:15:16+0700",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 20.0.1 (Oracle Corporation)"
 )
 public class LabMapperImpl implements LabMapper {
@@ -50,6 +52,41 @@ public class LabMapperImpl implements LabMapper {
         return list;
     }
 
+    @Override
+    public TeacherDTO getTeacherDTO(Teacher teacher) {
+        if ( teacher == null ) {
+            return null;
+        }
+
+        TeacherDTO.TeacherDTOBuilder teacherDTO = TeacherDTO.builder();
+
+        teacherDTO.id( teacher.getId() );
+        teacherDTO.name( teacher.getName() );
+        teacherDTO.surname( teacher.getSurname() );
+        List<String> list = teacher.getImages();
+        if ( list != null ) {
+            teacherDTO.images( new ArrayList<String>( list ) );
+        }
+        teacherDTO.department( teacher.getDepartment() );
+        teacherDTO.ownStudent( studentListToTeacherOwnStudentDTOList( teacher.getOwnStudent() ) );
+
+        return teacherDTO.build();
+    }
+
+    @Override
+    public List<TeacherDTO> getTeacherDTO(List<Teacher> teachers) {
+        if ( teachers == null ) {
+            return null;
+        }
+
+        List<TeacherDTO> list = new ArrayList<TeacherDTO>( teachers.size() );
+        for ( Teacher teacher : teachers ) {
+            list.add( getTeacherDTO( teacher ) );
+        }
+
+        return list;
+    }
+
     protected StudentTeacherDTO teacherToStudentTeacherDTO(Teacher teacher) {
         if ( teacher == null ) {
             return null;
@@ -61,5 +98,32 @@ public class LabMapperImpl implements LabMapper {
         studentTeacherDTO.name( teacher.getName() );
 
         return studentTeacherDTO.build();
+    }
+
+    protected TeacherOwnStudentDTO studentToTeacherOwnStudentDTO(Student student) {
+        if ( student == null ) {
+            return null;
+        }
+
+        TeacherOwnStudentDTO.TeacherOwnStudentDTOBuilder teacherOwnStudentDTO = TeacherOwnStudentDTO.builder();
+
+        teacherOwnStudentDTO.id( student.getId() );
+        teacherOwnStudentDTO.name( student.getName() );
+        teacherOwnStudentDTO.surname( student.getSurname() );
+
+        return teacherOwnStudentDTO.build();
+    }
+
+    protected List<TeacherOwnStudentDTO> studentListToTeacherOwnStudentDTOList(List<Student> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<TeacherOwnStudentDTO> list1 = new ArrayList<TeacherOwnStudentDTO>( list.size() );
+        for ( Student student : list ) {
+            list1.add( studentToTeacherOwnStudentDTO( student ) );
+        }
+
+        return list1;
     }
 }
