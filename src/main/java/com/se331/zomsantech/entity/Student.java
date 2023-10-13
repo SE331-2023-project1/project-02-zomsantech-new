@@ -1,16 +1,15 @@
 package com.se331.zomsantech.entity;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import jakarta.persistence.*;
+import lombok.*;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import java.util.List;
 
 @Data
 @Builder
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,8 +17,7 @@ public class Student {
     Long id;
     String name;
     String surname;
-    // profileImage Picture
-    // course -> course entity ref multi id
-    // teacher -> teacher entity ref id
-    String comment;
+    @ElementCollection
+    List<String> images;
+    String department;
 }
