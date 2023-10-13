@@ -20,4 +20,6 @@ public class Student {
     @ElementCollection
     List<String> images;
     String department;
+    @ManyToOne
+    Teacher teacher;
 }
