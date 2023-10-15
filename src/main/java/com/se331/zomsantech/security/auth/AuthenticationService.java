@@ -2,6 +2,13 @@ package com.se331.zomsantech.security.auth;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.se331.zomsantech.security.config.JwtService;
+import com.se331.zomsantech.security.token.Token;
+import com.se331.zomsantech.security.token.TokenRepository;
+import com.se331.zomsantech.security.token.TokenType;
+import com.se331.zomsantech.security.user.Role;
+import com.se331.zomsantech.security.user.User;
+import com.se331.zomsantech.security.user.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -10,15 +17,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import se331.lab.rest.repository.OrganizerRepository;
-import se331.lab.rest.security.config.JwtService;
-import se331.lab.rest.security.token.Token;
-import se331.lab.rest.security.token.TokenRepository;
-import se331.lab.rest.security.token.TokenType;
-import se331.lab.rest.security.user.Role;
-import se331.lab.rest.security.user.User;
-import se331.lab.rest.security.user.UserRepository;
-import se331.lab.rest.util.LabMapper;
+
 
 import java.io.IOException;
 import java.util.List;
@@ -32,7 +31,6 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-    final OrganizerRepository organizerRepository;
 
     public AuthenticationResponse register(RegisterRequest request) {
         User user = User.builder()

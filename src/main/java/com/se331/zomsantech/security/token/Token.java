@@ -1,11 +1,11 @@
 package com.se331.zomsantech.security.token;
 
+import com.se331.zomsantech.security.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import se331.lab.rest.security.user.User;
 
 @Data
 @Builder
