@@ -1,5 +1,7 @@
 package com.se331.zomsantech.security.user;
 
+import com.se331.zomsantech.entity.Student;
+import com.se331.zomsantech.entity.Teacher;
 import com.se331.zomsantech.security.token.Token;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -43,8 +45,11 @@ public class User implements UserDetails {
   @LazyCollection(LazyCollectionOption.FALSE)
   private List<Role> roles = new ArrayList<>();
 
-//  @OneToOne(mappedBy = "user")
-//  Organizer organizer;
+  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+  private Student student;
+
+  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+  private Teacher teacher;
 
   @OneToMany(mappedBy = "user")
   private List<Token> tokens;

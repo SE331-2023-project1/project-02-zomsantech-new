@@ -1,5 +1,6 @@
 package com.se331.zomsantech.entity;
 
+import com.se331.zomsantech.security.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,4 +23,8 @@ public class Student {
     String department;
     @ManyToOne
     Teacher teacher;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }
