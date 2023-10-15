@@ -12,8 +12,8 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-10-13T22:15:16+0700",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 20.0.1 (Oracle Corporation)"
+    date = "2023-10-15T12:07:32+0700",
+    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.35.0.v20230814-2020, environment: Java 17.0.8.1 (Eclipse Adoptium)"
 )
 public class LabMapperImpl implements LabMapper {
 
@@ -25,14 +25,14 @@ public class LabMapperImpl implements LabMapper {
 
         StudentDTO.StudentDTOBuilder studentDTO = StudentDTO.builder();
 
+        studentDTO.department( student.getDepartment() );
         studentDTO.id( student.getId() );
-        studentDTO.name( student.getName() );
-        studentDTO.surname( student.getSurname() );
         List<String> list = student.getImages();
         if ( list != null ) {
             studentDTO.images( new ArrayList<String>( list ) );
         }
-        studentDTO.department( student.getDepartment() );
+        studentDTO.name( student.getName() );
+        studentDTO.surname( student.getSurname() );
         studentDTO.teacher( teacherToStudentTeacherDTO( student.getTeacher() ) );
 
         return studentDTO.build();
@@ -60,15 +60,15 @@ public class LabMapperImpl implements LabMapper {
 
         TeacherDTO.TeacherDTOBuilder teacherDTO = TeacherDTO.builder();
 
+        teacherDTO.department( teacher.getDepartment() );
         teacherDTO.id( teacher.getId() );
-        teacherDTO.name( teacher.getName() );
-        teacherDTO.surname( teacher.getSurname() );
         List<String> list = teacher.getImages();
         if ( list != null ) {
             teacherDTO.images( new ArrayList<String>( list ) );
         }
-        teacherDTO.department( teacher.getDepartment() );
+        teacherDTO.name( teacher.getName() );
         teacherDTO.ownStudent( studentListToTeacherOwnStudentDTOList( teacher.getOwnStudent() ) );
+        teacherDTO.surname( teacher.getSurname() );
 
         return teacherDTO.build();
     }
