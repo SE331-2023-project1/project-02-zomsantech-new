@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -52,23 +51,25 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse advisorRegister(RegisterRequest request) {
+
+        if (repository.existsByUsername(request.getUsername())) {
+            ErrorResponse errorResponse = new ErrorResponse("ชื่อผู้ใช้ซ้ำกัน");
+            return AuthenticationResponse.error(errorResponse);
+        }
+
         User advisor = User.builder()
                 .username(request.getUsername())
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .roles(List.of(Role.ROLE_ADVISOR))
+                .roles(List.of(Role.ROLE_TEACHER))
                 .build();
         var savedUser = repository.save(advisor);
         var jwtToken = jwtService.generateToken(advisor);
         var refreshToken = jwtService.generateRefreshToken(advisor);
         saveUserToken(savedUser, jwtToken);
-        return AuthenticationResponse.builder()
-                .accessToken(jwtToken)
-                .refreshToken(refreshToken)
-                .userRole(advisor.getRoles())
-                .build();
+        return AuthenticationResponse.success(jwtToken, refreshToken, advisor.getRoles());
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {

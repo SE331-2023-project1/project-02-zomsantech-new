@@ -20,6 +20,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
     @Transactional
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
         Teacher t1, t2, t3;
+        // Teacher from entity
         t1 = teacherRepository.save(Teacher.builder()
                 .name("Dto")
                 .surname("Dto").build());

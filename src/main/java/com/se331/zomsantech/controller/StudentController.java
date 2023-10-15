@@ -25,9 +25,24 @@ public class StudentController {
         HttpHeaders responseHeader = new HttpHeaders();
         responseHeader.set("x-total-count", String.valueOf(pageOutput.getTotalElements()));
         return new ResponseEntity<>(LabMapper.INSTANCE.getStudentDTO(pageOutput.getContent()),responseHeader,HttpStatus.OK);
+        // pageOutput.getContent() :: list of content from specific page
     }
     @GetMapping("students/{id}")
     public ResponseEntity<?> getStudent(@PathVariable("id") Long id) {
+        Student output = studentService.getStudent(id);
+        if (output != null) {
+            return ResponseEntity.ok(LabMapper.INSTANCE.getStudentDTO(output));
+            // LabMapper.INSTANCE.getStudentDTO(output) :: send output (student obj) to Labmapper
+            // Labmapper DTOtoEntity
+
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given id is not found");
+        }
+    }
+
+    // TODO : student/{id}/advisor to see the advisors
+    @GetMapping("students/{id}/advisor")
+    public ResponseEntity<?> getAdvisorOfStudent(@PathVariable("id") Long id) {
         Student output = studentService.getStudent(id);
         if (output != null) {
             return ResponseEntity.ok(LabMapper.INSTANCE.getStudentDTO(output));
@@ -35,5 +50,6 @@ public class StudentController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The given id is not found");
         }
     }
+
 
 }
