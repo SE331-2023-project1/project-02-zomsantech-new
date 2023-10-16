@@ -12,6 +12,7 @@ import com.se331.zomsantech.security.token.TokenRepository;
 import com.se331.zomsantech.security.token.TokenType;
 import com.se331.zomsantech.security.user.Role;
 import com.se331.zomsantech.security.user.User;
+import com.se331.zomsantech.security.user.UserProfileDTO;
 import com.se331.zomsantech.security.user.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,6 +20,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -43,7 +46,6 @@ public class AuthenticationService {
             return AuthenticationResponse.error(errorResponse);
         }
 
-        System.out.println(request);
         // TODO : เพิ่ม duplicate email check
         User user = User.builder()
                 .username(request.getUsername())
@@ -53,8 +55,6 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .roles(List.of(Role.ROLE_STUDENT))
                 .build();
-
-        System.out.println(user);
 
         var savedUser = repository.save(user);
 
@@ -119,6 +119,21 @@ public class AuthenticationService {
                 .refreshToken(refreshToken)
                 .userRole(userRoles)
                 .build();
+    }
+
+    public UserProfileDTO getCurrentUserProfile() {
+        String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+        System.out.println(currentUsername);
+        User currentUser = repository.findByUsername(currentUsername).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        System.out.println(currentUsername);
+
+        UserProfileDTO profile = new UserProfileDTO();
+        profile.setUsername(currentUser.getUsername());
+        profile.setFirstname(currentUser.getFirstname());
+        profile.setLastname(currentUser.getLastname());
+        profile.setEmail(currentUser.getEmail());
+        return profile;
     }
 
     private void saveUserToken(User user, String jwtToken) {

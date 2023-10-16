@@ -25,6 +25,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
   private final UserDetailsService userDetailsService;
   private final TokenRepository tokenRepository;
 
+
+
   @Override
   protected void doFilterInternal(
       @NonNull HttpServletRequest request,
@@ -46,6 +48,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     userEmail = jwtService.extractUsername(jwt);
     if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
       UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+
+//      System.out.println("hahaha");
+//      System.out.println(userEmail);
+//      System.out.println(userDetails);
 
       boolean isTokenValid = tokenRepository.findByToken(jwt)
               .map(t -> !t.isExpired() && !t.isRevoked())
