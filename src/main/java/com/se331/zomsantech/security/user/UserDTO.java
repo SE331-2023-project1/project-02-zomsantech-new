@@ -1,19 +1,16 @@
-package com.se331.zomsantech.entity;
+package com.se331.zomsantech.security.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class StudentDTO {
+public class UserDTO {
     Long id;
-    List<String> images;
-    String department;
-    StudentTeacherDTO teacher;
+    String username;
+    String email;
 }

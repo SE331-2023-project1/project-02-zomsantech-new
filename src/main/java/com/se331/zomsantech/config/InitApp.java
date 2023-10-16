@@ -36,8 +36,16 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
 
         Teacher t1 = new Teacher();
         t1.setUser(userT1);
-        t1.setName("Dto");
         teacherRepository.save(t1);
+
+        User userT2 = new User();
+        userT1.setUsername("teacherDtoasddd");
+        userT1.setPassword("teacherDtoPassasdddword");
+        userRepository.save(userT2);
+
+        Teacher t2 = new Teacher();
+        t2.setUser(userT2);
+        teacherRepository.save(t2);
 
         User userS1 = new User();
         userS1.setUsername("studentThiwakon");
@@ -46,7 +54,6 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
 
         Student s1 = new Student();
         s1.setUser(userS1);
-        s1.setName("Upah");
         s1.setTeacher(t1);
         studentRepository.save(s1);
 

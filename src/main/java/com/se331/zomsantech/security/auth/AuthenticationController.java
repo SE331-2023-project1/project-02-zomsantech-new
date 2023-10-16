@@ -18,17 +18,17 @@ public class AuthenticationController {
 
   private final AuthenticationService service;
 
-  @PostMapping("/register")
-  public ResponseEntity<AuthenticationResponse> register(
+  @PostMapping("/register/student")
+  public ResponseEntity<AuthenticationResponse> studentRegister(
       @RequestBody RegisterRequest request
   ) {
-    return ResponseEntity.ok(service.register(request));
+    return ResponseEntity.ok(service.studentRegister(request));
   }
-  @PostMapping("advisor/register")
-  public ResponseEntity<AuthenticationResponse> advisorRegister(
+  @PostMapping("/register/teacher")
+  public ResponseEntity<AuthenticationResponse> teacherRegister(
           @RequestBody RegisterRequest request
   ) {
-    return ResponseEntity.ok(service.advisorRegister(request));
+    return ResponseEntity.ok(service.teacherRegister(request));
   }
   @PostMapping("/authenticate")
   public ResponseEntity<AuthenticationResponse> authenticate(

@@ -2,6 +2,10 @@ package com.se331.zomsantech.security.auth;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.se331.zomsantech.entity.Student;
+import com.se331.zomsantech.entity.Teacher;
+import com.se331.zomsantech.repository.StudentRepository;
+import com.se331.zomsantech.repository.TeacherRepository;
 import com.se331.zomsantech.security.config.JwtService;
 import com.se331.zomsantech.security.token.Token;
 import com.se331.zomsantech.security.token.TokenRepository;
@@ -30,8 +34,15 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final TeacherRepository teacherRepository;
+    private final StudentRepository studentRepository;
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public AuthenticationResponse studentRegister(RegisterRequest request) {
+        if (repository.existsByUsername(request.getUsername())) {
+            ErrorResponse errorResponse = new ErrorResponse("Duplicate Username");
+            return AuthenticationResponse.error(errorResponse);
+        }
+        // TODO : เพิ่ม duplicate email check
         User user = User.builder()
                 .username(request.getUsername())
                 .firstname(request.getFirstname())
@@ -40,20 +51,28 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .roles(List.of(Role.ROLE_STUDENT))
                 .build();
+
         var savedUser = repository.save(user);
+        Student student = new Student();
+        student.setUser(savedUser);
+
+        Long teacherId = request.getTeacherId();
+        Teacher teacher = teacherRepository.findById(teacherId).orElse(null);
+        if (teacher != null) {
+            student.setTeacher(teacher);
+        }
+
+        studentRepository.save(student);
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         saveUserToken(savedUser, jwtToken);
-        return AuthenticationResponse.builder()
-                .accessToken(jwtToken)
-                .refreshToken(refreshToken)
-                .build();
+        return AuthenticationResponse.success(jwtToken, refreshToken, user.getRoles());
     }
 
-    public AuthenticationResponse advisorRegister(RegisterRequest request) {
+    public AuthenticationResponse teacherRegister(RegisterRequest request) {
 
         if (repository.existsByUsername(request.getUsername())) {
-            ErrorResponse errorResponse = new ErrorResponse("ชื่อผู้ใช้ซ้ำกัน");
+            ErrorResponse errorResponse = new ErrorResponse("Duplicate Username");
             return AuthenticationResponse.error(errorResponse);
         }
 
@@ -84,16 +103,12 @@ public class AuthenticationService {
 
         String jwtToken = jwtService.generateToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);
-
-        // Get the user's roles and convert them to a comma-separated string
         List<Role> userRoles = user.getRoles();
 
-//    revokeAllUserTokens(user);
         saveUserToken(user, jwtToken);
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
-//                .user(LabMapper.INSTANCE.getOrganizerAuthDTO(user.getOrganizer()))
                 .userRole(userRoles)
                 .build();
     }
