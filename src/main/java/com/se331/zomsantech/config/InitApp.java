@@ -63,7 +63,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         userRepository.save(userS1);
 
         User userS2 = new User();
-        userS2.setUsername("Pattana");
+        userS2.setUsername("Pat");
         userS2.setFirstname("Pattana");
         userS2.setLastname("Pattana");
         userS2.setPassword("passwasdord");

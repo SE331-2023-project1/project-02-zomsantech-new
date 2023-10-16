@@ -43,17 +43,31 @@ public class UserController {
     }
 
     @GetMapping("/students")
-    public ResponseEntity<?> getStudentLists(@RequestParam(value = "_limit", required = false) Integer perPage,
-                                             @RequestParam(value = "_page", required = false) Integer page) {
+    public ResponseEntity<?> getAllStudents(@RequestParam(value = "_limit", required = false) Integer perPage,
+                                            @RequestParam(value = "_page", required = false) Integer page,
+                                            @RequestParam(value = "_filter", required = false) String filter) {
+        perPage = perPage == null ? 3 : perPage;
+        page = page == null ? 1 : page;
+        Page<Student> pageOutput;
 
+        if (filter == null) {
+            pageOutput = studentService.getStudents(perPage, page);
+        } else {
+            pageOutput = studentService.getStudents(filter, PageRequest.of(page-1, perPage));
+        }
 
+        HttpHeaders responseHeader = new HttpHeaders();
+        responseHeader.set("x-total-count", String.valueOf(pageOutput.getTotalElements()));
+        return new ResponseEntity<>(pageOutput.getContent().stream()
+                .map(LabMapper.INSTANCE::getStudentDTO)
+                .collect(Collectors.toList()), responseHeader, HttpStatus.OK);
+    }
 
+    @GetMapping("/students/{id}")
+    public ResponseEntity<?> getStudentById(@PathVariable("id") Long id) {
+        Student studentopt = studentService.getStudent(id);
+        return ResponseEntity.ok(LabMapper.INSTANCE.getStudentDTO(studentopt));
 
-//        List<Student> students = studentRepository.findAll();
-//        responseHeader.set("x-total-count", String.valueOf(pageOutput.getTotalElements()));
-//        List<User> studentUsers = students.stream().map(Student::getUser).collect(Collectors.toList());
-//        return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(studentUsers));
-        return ResponseEntity.ok("hi");
     }
 
 //    @GetMapping("/teachers")

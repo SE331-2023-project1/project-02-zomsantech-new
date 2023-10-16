@@ -10,7 +10,7 @@ public interface StudentService {
 
     Page<Student> getStudents(Integer pageSize, Integer page);
 
-    Page<Student> getStudents(String title, Pageable pageable);
+    Page<Student> getStudents(String filter, Pageable pageable);
 
     Student getStudent(Long id);
 
