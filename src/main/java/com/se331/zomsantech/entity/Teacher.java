@@ -23,7 +23,6 @@ public class Teacher {
     @OneToMany(mappedBy = "teacher")
     @Builder.Default
     List<Student> ownStudent = new ArrayList<>();
-
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;

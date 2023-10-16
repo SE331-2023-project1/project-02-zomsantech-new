@@ -38,12 +38,8 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         userT1.setLastname("Kingbird");
         userT1.setPassword("password");
         userT1.setRoles(List.of(Role.ROLE_TEACHER));
-
         userRepository.save(userT1);
 
-        Teacher t1 = new Teacher();
-        t1.setUser(userT1);
-        teacherRepository.save(t1);
 
         User userT2 = new User();
         userT2.setUsername("SS");
@@ -53,10 +49,10 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         userT2.setRoles(List.of(Role.ROLE_TEACHER));
         userRepository.save(userT2);
 
-        Teacher t2 = new Teacher();
-        t2.setUser(userT2);
-        teacherRepository.save(t2);
 
+        Teacher t1 = new Teacher();
+        t1.setUser(userT1);
+        teacherRepository.save(t1);
 
         User userS1 = new User();
         userS1.setUsername("Thiwakon");
@@ -66,11 +62,6 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         userS1.setRoles(List.of(Role.ROLE_STUDENT));
         userRepository.save(userS1);
 
-        Student s1 = new Student();
-        s1.setUser(userS1);
-        s1.setTeacher(t1);
-        studentRepository.save(s1);
-
         User userS2 = new User();
         userS2.setUsername("Pattana");
         userS2.setFirstname("Pattana");
@@ -79,10 +70,26 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         userS2.setRoles(List.of(Role.ROLE_STUDENT));
         userRepository.save(userS2);
 
+        Student s1 = new Student();
+        s1.setUser(userS1);
+        s1.setTeacher(t1);
+        studentRepository.save(s1);
+
+        Teacher t2 = new Teacher();
+
+
         Student s2 = new Student();
+
         s2.setUser(userS2);
-        s2.setTeacher(t1);
+        s2.setTeacher(t2);
         studentRepository.save(s2);
+
+        t2.setUser(userT2);
+        t2.getOwnStudent().add(s2);
+        s2.setTeacher(t2);
+        teacherRepository.save(t2);
+        studentRepository.save(s2);
+
 
 
 

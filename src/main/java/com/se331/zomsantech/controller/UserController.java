@@ -1,5 +1,6 @@
 package com.se331.zomsantech.controller;
 
+import com.se331.zomsantech.entity.DetailedTeacherDTO;
 import com.se331.zomsantech.entity.Student;
 import com.se331.zomsantech.entity.Teacher;
 import com.se331.zomsantech.repository.StudentRepository;
@@ -43,12 +44,20 @@ public class UserController {
         return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(studentUsers));
     }
 
-    @GetMapping("/teachers")
-    public ResponseEntity<?> getUsersThatAreTeachers() {
-        List<Teacher> teachers = teacherRepository.findAll();
-        List<User> teacherUsers = teachers.stream().map(Teacher::getUser).collect(Collectors.toList());
-        return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(teacherUsers));
-    }
+//    @GetMapping("/teachers")
+//    public ResponseEntity<?> getUsersThatAreTeachers() {
+//        List<Teacher> teachers = teacherRepository.findAll();
+//        List<User> teacherUsers = teachers.stream().map(Teacher::getUser).collect(Collectors.toList());
+//        return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(teacherUsers));
+//    }
+@GetMapping("/teachers")
+public ResponseEntity<?> getAllTeachers() {
+    List<Teacher> teachers = teacherRepository.findAll();
+    List<DetailedTeacherDTO> detailedTeacherDTOs = teachers.stream()
+            .map(LabMapper.INSTANCE::getDetailedTeacherDTO)
+            .collect(Collectors.toList());
+    return ResponseEntity.ok(detailedTeacherDTOs);
+}
 
     @GetMapping("/users/{id}")
     public ResponseEntity<?> getUser(@PathVariable("id") Long id) {

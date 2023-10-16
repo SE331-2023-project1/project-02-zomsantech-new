@@ -1,12 +1,10 @@
 package com.se331.zomsantech.util;
 
-import com.se331.zomsantech.entity.Student;
-import com.se331.zomsantech.entity.StudentDTO;
-import com.se331.zomsantech.entity.Teacher;
-import com.se331.zomsantech.entity.TeacherDTO;
+import com.se331.zomsantech.entity.*;
 import com.se331.zomsantech.security.user.User;
 import com.se331.zomsantech.security.user.UserDTO;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -20,4 +18,17 @@ public interface LabMapper {
     List<TeacherDTO> getTeacherDTO(List<Teacher> teachers);
     UserDTO getUserDTO(User user);
     List<UserDTO> getUserDTO(List<User> users);
+
+    @Mapping(source = "user.id", target = "id")
+    @Mapping(source = "user.username", target = "username")
+    @Mapping(source = "user.firstname", target = "firstname")
+    @Mapping(source = "user.lastname", target = "lastname")
+    @Mapping(source = "user.email", target = "email")
+    @Mapping(source = "user.roles", target = "roles")
+    @Mapping(source = "ownStudent", target = "ownStudent")
+    DetailedTeacherDTO getDetailedTeacherDTO(Teacher teacher);
+
+    @Mapping(source = "user.firstname", target = "name")
+    @Mapping(source = "user.lastname", target = "surname")
+    TeacherOwnStudentDTO getTeacherOwnStudentDTO(Student student);
 }
