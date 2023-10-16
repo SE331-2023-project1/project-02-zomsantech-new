@@ -22,8 +22,8 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Page<Teacher> getTeachers(String title, Pageable pageable) {
-        return null;
+    public Page<Teacher> getTeachers(String filter, Pageable pageable) {
+        return teacherDao.getTeachers(filter,pageable);
     }
 
     @Override

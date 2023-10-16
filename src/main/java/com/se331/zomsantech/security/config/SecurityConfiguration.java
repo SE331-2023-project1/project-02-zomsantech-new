@@ -26,33 +26,33 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
-        http.headers((headers) -> {
-            headers.frameOptions((frameOptions) -> frameOptions.disable());
-        });
-        http
-                .csrf((crsf) -> crsf.disable())
-                .authorizeHttpRequests((authorize) -> {
-
-                    authorize.requestMatchers("api/v1/auth/**").permitAll()
-                            .requestMatchers("/users/**").permitAll()
-                            .requestMatchers(HttpMethod.GET,"/events").permitAll()
-                            .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
-                            .requestMatchers(HttpMethod.POST,"/events").hasRole("ADMIN")
-                            .anyRequest().authenticated();
-                })
-                .sessionManagement((session) -> {
-                    session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-                })
-                .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .logout((logout) -> {
-                    logout.logoutUrl("/api/v1/auth/logout");
-                    logout.addLogoutHandler(logoutHandler);
-                    logout.logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext());
-                })
-        ;
-        http.cors(withDefaults());
+//
+//        http.headers((headers) -> {
+//            headers.frameOptions((frameOptions) -> frameOptions.disable());
+//        });
+//        http
+//                .csrf((crsf) -> crsf.disable())
+//                .authorizeHttpRequests((authorize) -> {
+//
+//                    authorize.requestMatchers("api/v1/auth/**").permitAll()
+//                            .requestMatchers("/users/**").permitAll()
+//                            .requestMatchers(HttpMethod.GET,"/events").permitAll()
+//                            .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
+//                            .requestMatchers(HttpMethod.POST,"/events").hasRole("ADMIN")
+//                            .anyRequest().authenticated();
+//                })
+//                .sessionManagement((session) -> {
+//                    session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//                })
+//                .authenticationProvider(authenticationProvider)
+//                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+//                .logout((logout) -> {
+//                    logout.logoutUrl("/api/v1/auth/logout");
+//                    logout.addLogoutHandler(logoutHandler);
+//                    logout.logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext());
+//                })
+//        ;
+//        http.cors(withDefaults());
         return http.build();
 
     }

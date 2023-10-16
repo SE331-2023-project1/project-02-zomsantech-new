@@ -8,15 +8,16 @@ import com.se331.zomsantech.repository.TeacherRepository;
 import com.se331.zomsantech.security.user.User;
 import com.se331.zomsantech.security.user.UserRepository;
 import com.se331.zomsantech.security.user.UserService;
+import com.se331.zomsantech.service.StudentService;
 import com.se331.zomsantech.service.TeacherService;
 import com.se331.zomsantech.util.LabMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -33,6 +34,7 @@ public class UserController {
     private final TeacherRepository teacherRepository; // ถ้าคุณมี TeacherRepository
 
     private final TeacherService teacherService;
+    private final StudentService studentService;
     private final UserService userService;
     @GetMapping("/users")
     public ResponseEntity<?> getAllUsers() {
@@ -41,10 +43,17 @@ public class UserController {
     }
 
     @GetMapping("/students")
-    public ResponseEntity<?> getUsersThatAreStudents() {
-        List<Student> students = studentRepository.findAll();
-        List<User> studentUsers = students.stream().map(Student::getUser).collect(Collectors.toList());
-        return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(studentUsers));
+    public ResponseEntity<?> getStudentLists(@RequestParam(value = "_limit", required = false) Integer perPage,
+                                             @RequestParam(value = "_page", required = false) Integer page) {
+
+
+
+
+//        List<Student> students = studentRepository.findAll();
+//        responseHeader.set("x-total-count", String.valueOf(pageOutput.getTotalElements()));
+//        List<User> studentUsers = students.stream().map(Student::getUser).collect(Collectors.toList());
+//        return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(studentUsers));
+        return ResponseEntity.ok("hi");
     }
 
 //    @GetMapping("/teachers")
@@ -54,12 +63,27 @@ public class UserController {
 //        return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(teacherUsers));
 //    }
 @GetMapping("/teachers")
-public ResponseEntity<?> getAllTeachers() {
-    List<Teacher> teachers = teacherRepository.findAll();
-    List<DetailedTeacherDTO> detailedTeacherDTOs = teachers.stream()
+public ResponseEntity<?> getAllTeachers(@RequestParam(value = "_limit", required = false) Integer perPage,
+                                        @RequestParam(value = "_page", required = false) Integer page,
+                                        @RequestParam(value = "_filter", required = false) String filter) {
+    perPage = perPage == null ? 3 : perPage;
+    page = page == null ? 1 : page;
+    Page<Teacher> pageOutput;
+    // = teacherService.getTeachers(perPage, page);
+
+            if (filter == null) {
+                pageOutput = teacherService.getTeachers(perPage, page);
+//                    pageOutput = eventService.getEvents(perPage,page);
+                }else{
+                    pageOutput = teacherService.getTeachers(filter, PageRequest.of(page-1,perPage));
+               }
+
+
+    HttpHeaders responseHeader = new HttpHeaders();
+    responseHeader.set("x-total-count", String.valueOf(pageOutput.getTotalElements()));
+    return new ResponseEntity<>(pageOutput.getContent().stream()
             .map(LabMapper.INSTANCE::getDetailedTeacherDTO)
-            .collect(Collectors.toList());
-    return ResponseEntity.ok(detailedTeacherDTOs);
+            .collect(Collectors.toList()), responseHeader, HttpStatus.OK);
 }
 
     @GetMapping("/teachers/{id}")
