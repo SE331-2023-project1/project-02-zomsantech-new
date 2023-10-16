@@ -42,6 +42,8 @@ public class AuthenticationService {
             ErrorResponse errorResponse = new ErrorResponse("Duplicate Username");
             return AuthenticationResponse.error(errorResponse);
         }
+
+        System.out.println(request);
         // TODO : เพิ่ม duplicate email check
         User user = User.builder()
                 .username(request.getUsername())
@@ -52,7 +54,10 @@ public class AuthenticationService {
                 .roles(List.of(Role.ROLE_STUDENT))
                 .build();
 
+        System.out.println(user);
+
         var savedUser = repository.save(user);
+
         Student student = new Student();
         student.setUser(savedUser);
 
