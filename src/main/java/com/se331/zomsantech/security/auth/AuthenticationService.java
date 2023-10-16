@@ -67,6 +67,9 @@ public class AuthenticationService {
             student.setTeacher(teacher);
         }
 
+        teacher.getOwnStudent().add(student);
+
+        teacherRepository.save(teacher);
         studentRepository.save(student);
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);

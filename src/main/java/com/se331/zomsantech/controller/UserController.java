@@ -8,6 +8,7 @@ import com.se331.zomsantech.repository.TeacherRepository;
 import com.se331.zomsantech.security.user.User;
 import com.se331.zomsantech.security.user.UserRepository;
 import com.se331.zomsantech.security.user.UserService;
+import com.se331.zomsantech.service.TeacherService;
 import com.se331.zomsantech.util.LabMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -30,6 +32,7 @@ public class UserController {
     private final UserRepository userRepository;
     private final TeacherRepository teacherRepository; // ถ้าคุณมี TeacherRepository
 
+    private final TeacherService teacherService;
     private final UserService userService;
     @GetMapping("/users")
     public ResponseEntity<?> getAllUsers() {
@@ -58,6 +61,13 @@ public ResponseEntity<?> getAllTeachers() {
             .collect(Collectors.toList());
     return ResponseEntity.ok(detailedTeacherDTOs);
 }
+
+    @GetMapping("/teachers/{id}")
+    public ResponseEntity<?> getTeacherById(@PathVariable("id") Long id) {
+        Teacher teacherOpt = teacherService.getTeacher(id);
+        return ResponseEntity.ok(LabMapper.INSTANCE.getDetailedTeacherDTO(teacherOpt));
+
+    }
 
     @GetMapping("/users/{id}")
     public ResponseEntity<?> getUser(@PathVariable("id") Long id) {
