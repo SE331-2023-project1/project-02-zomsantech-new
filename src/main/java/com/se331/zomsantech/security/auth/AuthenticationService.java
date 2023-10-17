@@ -109,6 +109,9 @@ public class AuthenticationService {
         User user = repository.findByUsername(request.getUsername())
                 .orElseThrow();
 
+        // user.getId()
+        // user.getUserName()
+
         String jwtToken = jwtService.generateToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);
         List<Role> userRoles = user.getRoles();
@@ -118,6 +121,8 @@ public class AuthenticationService {
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
                 .userRole(userRoles)
+                .userName(user.getUsername())
+                .id(user.getId())
                 .build();
     }
 

@@ -22,12 +22,6 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
     final TeacherRepository teacherRepository;
     final UserRepository userRepository;
 
-//    public InitApp(UserRepository userRepository, StudentRepository studentRepository, TeacherRepository teacherRepository) {
-//        this.userRepository = userRepository;
-//        this.studentRepository = studentRepository;
-//        this.teacherRepository = teacherRepository;
-//    }
-
     @Override
     @Transactional
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
@@ -39,7 +33,6 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         userT1.setPassword("password");
         userT1.setRoles(List.of(Role.ROLE_TEACHER));
         userRepository.save(userT1);
-
 
         User userT2 = new User();
         userT2.setUsername("SS");
@@ -77,7 +70,6 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
 
         Teacher t2 = new Teacher();
 
-
         Student s2 = new Student();
 
         s2.setUser(userS2);
@@ -90,52 +82,6 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         teacherRepository.save(t2);
         studentRepository.save(s2);
 
-
-
-
-//        Teacher t1, t2, t3;
-//        // Teacher from entity
-//        t1 = teacherRepository.save(Teacher.builder()
-//                .name("Dto")
-//                .surname("Dto").build());
-//        t2 = teacherRepository.save(Teacher.builder()
-//                .name("Kong")
-//                .surname("Passakorn").build());
-//        t3 = teacherRepository.save(Teacher.builder()
-//                .name("Tei")
-//                .surname("Pathathai").build());
-//
-//        Student tempStudent;
-//
-//        tempStudent = studentRepository.save(Student.builder()
-//                .name("Thiwakon")
-//                .surname("Sakunchao").build());
-//        tempStudent.setTeacher(t1);
-//        t1.getOwnStudent().add(tempStudent);
-//
-//        tempStudent = studentRepository.save(Student.builder()
-//                .name("Sorawee")
-//                .surname("Sakunchao").build());
-//        tempStudent.setTeacher(t1);
-//        t1.getOwnStudent().add(tempStudent);
-//
-//        tempStudent = studentRepository.save(Student.builder()
-//                .name("Pattanachai")
-//                .surname("Sakunchao").build());
-//        tempStudent.setTeacher(t2);
-//        t2.getOwnStudent().add(tempStudent);
-//
-//        tempStudent = studentRepository.save(Student.builder()
-//                .name("Taninwat")
-//                .surname("Sakunchao").build());
-//        tempStudent.setTeacher(t2);
-//        t2.getOwnStudent().add(tempStudent);
-//
-//        tempStudent = studentRepository.save(Student.builder()
-//                .name("Danaikrit")
-//                .surname("Sakunchao").build());
-//        tempStudent.setTeacher(t3);
-//        t3.getOwnStudent().add(tempStudent);
 
     }
 }

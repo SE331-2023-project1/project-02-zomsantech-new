@@ -23,6 +23,14 @@ public class AuthenticationResponse {
   private String refreshToken;
   @JsonProperty("user_role")
   private List<Role> userRole;
+
+  @JsonProperty("user_username")
+  private String userName;
+
+  @JsonProperty("user_id")
+  private Integer id;
+
+
 //  private OrganizerAuthDTO user;
 
   @JsonInclude(JsonInclude.Include.NON_NULL)
