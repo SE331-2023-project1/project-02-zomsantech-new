@@ -10,6 +10,8 @@ import com.se331.zomsantech.security.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +27,17 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
     @Override
     @Transactional
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
+
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+
+        User admin = new User();
+        admin.setUsername("admin");
+        admin.setFirstname("admin");
+        admin.setLastname("admin");
+        admin.setPassword(encoder.encode("admin"));
+        admin.setEmail("admin@admin.com");
+        admin.setRoles(List.of(Role.ROLE_ADMIN));
+        userRepository.save(admin);
 
         User userT1 = new User();
         userT1.setUsername("MM");
