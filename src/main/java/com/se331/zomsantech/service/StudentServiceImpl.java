@@ -2,6 +2,8 @@ package com.se331.zomsantech.service;
 
 import com.se331.zomsantech.dao.StudentDao;
 import com.se331.zomsantech.entity.Student;
+import com.se331.zomsantech.entity.StudentDTO;
+import com.se331.zomsantech.security.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,6 +38,9 @@ public class StudentServiceImpl implements StudentService {
         return studentDao.save(student);
     }
 
-
+    @Override
+    public User updateStudent(Long id, User user) {
+        return studentDao.updateStudent(id, user);
+    }
 
 }

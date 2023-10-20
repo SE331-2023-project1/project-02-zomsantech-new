@@ -2,6 +2,7 @@ package com.se331.zomsantech.controller;
 
 import com.se331.zomsantech.entity.DetailedTeacherDTO;
 import com.se331.zomsantech.entity.Student;
+import com.se331.zomsantech.entity.StudentDTO;
 import com.se331.zomsantech.entity.Teacher;
 import com.se331.zomsantech.repository.StudentRepository;
 import com.se331.zomsantech.repository.TeacherRepository;
@@ -49,13 +50,11 @@ public class UserController {
         perPage = perPage == null ? 3 : perPage;
         page = page == null ? 1 : page;
         Page<Student> pageOutput;
-
         if (filter == null) {
             pageOutput = studentService.getStudents(perPage, page);
         } else {
             pageOutput = studentService.getStudents(filter, PageRequest.of(page-1, perPage));
         }
-
         HttpHeaders responseHeader = new HttpHeaders();
         responseHeader.set("x-total-count", String.valueOf(pageOutput.getTotalElements()));
         return new ResponseEntity<>(pageOutput.getContent().stream()
@@ -67,15 +66,17 @@ public class UserController {
     public ResponseEntity<?> getStudentById(@PathVariable("id") Long id) {
         Student studentopt = studentService.getStudent(id);
         return ResponseEntity.ok(LabMapper.INSTANCE.getStudentDTO(studentopt));
-
     }
 
-//    @GetMapping("/teachers")
-//    public ResponseEntity<?> getUsersThatAreTeachers() {
-//        List<Teacher> teachers = teacherRepository.findAll();
-//        List<User> teacherUsers = teachers.stream().map(Teacher::getUser).collect(Collectors.toList());
-//        return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(teacherUsers));
-//    }
+    @PutMapping("/students/{id}")
+    public ResponseEntity<?> updateStudent(@PathVariable("id") Long id, @RequestBody User user) {
+        User updatedUser = studentService.updateStudent(id, user);
+        if (updatedUser != null) {
+            return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(updatedUser));
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Student not found");
+        }
+    }
 @GetMapping("/teachers")
 public ResponseEntity<?> getAllTeachers(@RequestParam(value = "_limit", required = false) Integer perPage,
                                         @RequestParam(value = "_page", required = false) Integer page,
@@ -83,11 +84,9 @@ public ResponseEntity<?> getAllTeachers(@RequestParam(value = "_limit", required
     perPage = perPage == null ? 3 : perPage;
     page = page == null ? 1 : page;
     Page<Teacher> pageOutput;
-    // = teacherService.getTeachers(perPage, page);
 
             if (filter == null) {
                 pageOutput = teacherService.getTeachers(perPage, page);
-//                    pageOutput = eventService.getEvents(perPage,page);
                 }else{
                     pageOutput = teacherService.getTeachers(filter, PageRequest.of(page-1,perPage));
                }
@@ -116,11 +115,4 @@ public ResponseEntity<?> getAllTeachers(@RequestParam(value = "_limit", required
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
         }
     }
-
-//    @GetMapping("users/teachers")
-//    public ResponseEntity<?> getAllTeachers() {
-//        List<Teacher> teachers = teacherRepository.findAll();
-//        List<User> teacherUsers = teachers.stream().map(Teacher::getUser).collect(Collectors.toList());
-//        return ResponseEntity.ok(teacherUsers);
-//    }
 }

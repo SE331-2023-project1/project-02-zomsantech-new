@@ -11,6 +11,7 @@ import com.se331.zomsantech.entity.Student;
 
 public interface StudentRepository extends JpaRepository<Student, Long> {
     List<Student> findAll();
+
     Page<Student> findByUser_FirstnameIgnoreCaseContainingOrUser_LastnameIgnoreCaseContainingOrUser_UsernameIgnoreCaseContaining(String firstname, String lastname, String username, Pageable pageRequest);
 
 }
