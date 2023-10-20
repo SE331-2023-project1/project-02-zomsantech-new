@@ -8,11 +8,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="zomsantech" />
+        <module name="project-02-zomsantech-new" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="project-02-zomsantech-new" options="-parameters" />
       <module name="zomsantech" options="-parameters" />
     </option>
   </component>
