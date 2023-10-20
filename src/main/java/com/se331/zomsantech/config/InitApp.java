@@ -40,10 +40,10 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         userRepository.save(admin);
 
         User userT1 = new User();
-        userT1.setUsername("MM");
-        userT1.setFirstname("Mr. Mock");
-        userT1.setLastname("Kingbird");
-        userT1.setPassword("password");
+        userT1.setUsername("teacher");
+        userT1.setFirstname("teacher");
+        userT1.setLastname("teacher");
+        userT1.setPassword(encoder.encode("teacher"));
         userT1.setRoles(List.of(Role.ROLE_TEACHER));
         userRepository.save(userT1);
 
@@ -61,10 +61,10 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         teacherRepository.save(t1);
 
         User userS1 = new User();
-        userS1.setUsername("Thiwakon");
-        userS1.setFirstname("Solid State");
-        userS1.setLastname("Of America");
-        userS1.setPassword("passwasdord");
+        userS1.setUsername("student");
+        userS1.setFirstname("student");
+        userS1.setLastname("student");
+        userS1.setPassword(encoder.encode("student"));
         userS1.setRoles(List.of(Role.ROLE_STUDENT));
         userRepository.save(userS1);
 
