@@ -1,8 +1,11 @@
 package com.se331.zomsantech.dao;
 
 import com.se331.zomsantech.entity.Student;
+import com.se331.zomsantech.entity.StudentDTO;
 import com.se331.zomsantech.entity.Teacher;
 import com.se331.zomsantech.repository.StudentRepository;
+import com.se331.zomsantech.security.user.User;
+import com.se331.zomsantech.security.user.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
@@ -18,6 +21,7 @@ import java.util.Optional;
 @Profile("db")
 public class StudentDaoDbImpl implements StudentDao {
     final StudentRepository studentRepository;
+    final UserRepository userRepository;
     @Override
     public Integer getStudentSize() {
         return Math.toIntExact(studentRepository.count());
@@ -42,6 +46,40 @@ public class StudentDaoDbImpl implements StudentDao {
     public Student getStudent(Long id) {
         return studentRepository.findById(id).orElse(null);
     }
+
+    @Override
+    public User updateStudent(Long id, User updatedUser) {
+        return studentRepository.findById(id)
+                .map(student -> {
+                    User user = student.getUser();
+                    if (updatedUser.getFirstname() != null) {
+                        user.setFirstname(updatedUser.getFirstname());
+                    }
+                    if (updatedUser.getLastname() != null) {
+                        user.setLastname(updatedUser.getLastname());
+                    }
+                    if (updatedUser.getUsername() != null) {
+                        user.setUsername(updatedUser.getUsername());
+                    }
+                    if (updatedUser.getEmail() != null) {
+                        user.setEmail(updatedUser.getEmail());
+                    }
+                    if (updatedUser.getPassword() != null) {
+                        user.setPassword(updatedUser.getPassword());
+                    }
+                    if (updatedUser.getImage() != null) {
+                        user.setImage(updatedUser.getImage());
+                    }
+                    // map other necessary fields from User to User here
+                    return userRepository.save(user);
+                })
+                .orElse(null);
+    }
+
+
+
+
+
 
 //    @Override
 //    public Teacher getTeacherOfStudent(Long studentId) {

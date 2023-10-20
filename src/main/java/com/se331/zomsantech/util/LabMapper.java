@@ -15,6 +15,7 @@ import java.util.List;
 public interface LabMapper {
     LabMapper INSTANCE = Mappers.getMapper(LabMapper.class);
     List<StudentDTO> getStudentDTO(List<Student> students);
+    @Mapping(source = "user.id", target = "id")
     TeacherDTO getTeacherDTO(Teacher teacher);
     List<TeacherDTO> getTeacherDTO(List<Teacher> teachers);
     UserDTO getUserDTO(User user);
@@ -31,6 +32,7 @@ public interface LabMapper {
     DetailedTeacherDTO getDetailedTeacherDTO(Teacher teacher);
 
     @Mapping(source = "user.firstname", target = "name")
+    @Mapping(source = "user.id", target = "id")
     @Mapping(source = "user.lastname", target = "surname")
     @Mapping(source = "user.image", target = "image")
     TeacherOwnStudentDTO getTeacherOwnStudentDTO(Student student);
@@ -46,6 +48,7 @@ public interface LabMapper {
     @Mapping(source = "user.username", target = "username")
     @Mapping(source = "user.firstname", target = "firstname")
     @Mapping(source = "user.lastname", target = "lastname")
+    @Mapping(source = "user.id", target = "id")
     @Mapping(source = "user.image", target = "image")
     StudentDTO getStudentDTO(Student student);
 

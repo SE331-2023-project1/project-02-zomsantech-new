@@ -2,6 +2,7 @@ package com.se331.zomsantech.controller;
 
 import com.se331.zomsantech.entity.DetailedTeacherDTO;
 import com.se331.zomsantech.entity.Student;
+import com.se331.zomsantech.entity.StudentDTO;
 import com.se331.zomsantech.entity.Teacher;
 import com.se331.zomsantech.repository.StudentRepository;
 import com.se331.zomsantech.repository.TeacherRepository;
@@ -68,9 +69,13 @@ public class UserController {
     }
 
     @PutMapping("/students/{id}")
-    public ResponseEntity<?> changeStudentById(@PathVariable("id") Long id) {
-        Student studentopt = studentService.getStudent(id);
-        return ResponseEntity.ok(LabMapper.INSTANCE.getStudentDTO(studentopt));
+    public ResponseEntity<?> updateStudent(@PathVariable("id") Long id, @RequestBody User user) {
+        User updatedUser = studentService.updateStudent(id, user);
+        if (updatedUser != null) {
+            return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(updatedUser));
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Student not found");
+        }
     }
 @GetMapping("/teachers")
 public ResponseEntity<?> getAllTeachers(@RequestParam(value = "_limit", required = false) Integer perPage,
