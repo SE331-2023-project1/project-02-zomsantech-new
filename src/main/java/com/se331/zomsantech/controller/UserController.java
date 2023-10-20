@@ -72,7 +72,6 @@ public class UserController {
         Student studentopt = studentService.getStudent(id);
         return ResponseEntity.ok(LabMapper.INSTANCE.getStudentDTO(studentopt));
     }
-
 @GetMapping("/teachers")
 public ResponseEntity<?> getAllTeachers(@RequestParam(value = "_limit", required = false) Integer perPage,
                                         @RequestParam(value = "_page", required = false) Integer page,

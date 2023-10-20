@@ -38,6 +38,8 @@ public class User implements UserDetails {
   private String username;
   private String email;
   private String password;
+  @Column(length = 500)
+  private String image;
 
   @Enumerated(EnumType.STRING)
   @ElementCollection
