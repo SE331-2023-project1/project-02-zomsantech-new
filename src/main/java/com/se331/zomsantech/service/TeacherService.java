@@ -1,5 +1,6 @@
 package com.se331.zomsantech.service;
 
+import com.se331.zomsantech.security.user.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -15,4 +16,6 @@ public interface TeacherService {
     Teacher getTeacher(Long id);
 
     Teacher save(Teacher teacher);
+
+    User updateTeacher(Long id, User updatedUser);
 }

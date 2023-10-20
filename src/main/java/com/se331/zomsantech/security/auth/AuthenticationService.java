@@ -59,15 +59,15 @@ public class AuthenticationService {
         Student student = new Student();
         student.setUser(savedUser);
 
-        Long teacherId = request.getTeacherUserId();
-        Teacher teacher = teacherRepository.findById(teacherId).orElse(null);
-        if (teacher != null) {
-            student.setTeacher(teacher);
-        }
-
-        teacher.getOwnStudent().add(student);
-
-        teacherRepository.save(teacher);
+//        Long teacherId = request.getTeacherUserId();
+//        Teacher teacher = teacherRepository.findById(teacherId).orElse(null);
+//        if (teacher != null) {
+//            student.setTeacher(teacher);
+//        }
+//
+//        teacher.getOwnStudent().add(student);
+//
+//        teacherRepository.save(teacher);
         studentRepository.save(student);
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
@@ -90,7 +90,12 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .roles(List.of(Role.ROLE_TEACHER))
                 .build();
+
+        Teacher teacher = new Teacher();
+        teacher.setUser(advisor);
+
         var savedUser = repository.save(advisor);
+        teacherRepository.save(teacher);
         var jwtToken = jwtService.generateToken(advisor);
         var refreshToken = jwtService.generateRefreshToken(advisor);
         saveUserToken(savedUser, jwtToken);
