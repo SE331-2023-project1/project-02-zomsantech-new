@@ -22,7 +22,7 @@ public class DetailedTeacherDTO {
     List<Role> roles = new ArrayList<>();
 
     // Fields from TeacherDTO
-    List<String> images;
+    String image;
     String department;
     List<TeacherOwnStudentDTO> ownStudent = new ArrayList<>();
 }

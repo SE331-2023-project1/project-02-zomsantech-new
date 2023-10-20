@@ -14,4 +14,5 @@ public class TeacherBriefDTO {
     String username;
     String firstname;
     String lastname;
+    String image;
 }
