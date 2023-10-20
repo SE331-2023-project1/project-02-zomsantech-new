@@ -70,6 +70,7 @@ public class UserController {
 
     }
 
+
 //    @GetMapping("/teachers")
 //    public ResponseEntity<?> getUsersThatAreTeachers() {
 //        List<Teacher> teachers = teacherRepository.findAll();

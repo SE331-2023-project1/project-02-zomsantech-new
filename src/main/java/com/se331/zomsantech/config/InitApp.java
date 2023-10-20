@@ -32,6 +32,9 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         userT1.setLastname("Kingbird");
         userT1.setPassword("password");
         userT1.setRoles(List.of(Role.ROLE_TEACHER));
+        userT1.setImage("https://storage.googleapis.com/download/storage/v1/b/" +
+                "se-lab-331-imageuplaod.appspot.com/o/2023-10-20%20132021191-379663637_630804189042392_265397635741634822_n.jpg?" +
+                "generation=1697782821940462&alt=media");
         userRepository.save(userT1);
 
 
@@ -41,6 +44,9 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         userT2.setLastname("Of America");
         userT2.setPassword("passasdword");
         userT2.setRoles(List.of(Role.ROLE_TEACHER));
+        userT2.setImage("https://storage.googleapis.com/download/storage/v1/b/" +
+                "se-lab-331-imageuplaod.appspot.com/o/2023-10-20%20132021191-379663637_630804189042392_265397635741634822_n.jpg?" +
+                "generation=1697782821940462&alt=media");
         userRepository.save(userT2);
 
         User userT3 = new User();
@@ -49,6 +55,9 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         userT3.setLastname("Riabroy");
         userT3.setPassword("Kriabroy");
         userT3.setRoles(List.of(Role.ROLE_TEACHER));
+        userT3.setImage("https://storage.googleapis.com/download/storage/v1/b/" +
+                "se-lab-331-imageuplaod.appspot.com/o/2023-10-20%20132021191-379663637_630804189042392_265397635741634822_n.jpg?" +
+                "generation=1697782821940462&alt=media");
         userRepository.save(userT3);
 
         User userT4 = new User();
@@ -57,6 +66,9 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         userT4.setLastname("Nalumpoon");
         userT4.setPassword("Toey321");
         userT4.setRoles(List.of(Role.ROLE_TEACHER));
+        userT4.setImage("https://storage.googleapis.com/download/storage/v1/b/" +
+                "se-lab-331-imageuplaod.appspot.com/o/2023-10-20%20132021191-379663637_630804189042392_265397635741634822_n.jpg?" +
+                "generation=1697782821940462&alt=media");
         userRepository.save(userT4);
 
         User userT5 = new User();
@@ -65,6 +77,9 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         userT5.setLastname("Chaplin");
         userT5.setPassword("Chaplin132");
         userT5.setRoles(List.of(Role.ROLE_TEACHER));
+        userT5.setImage("https://storage.googleapis.com/download/storage/v1/b/" +
+                "se-lab-331-imageuplaod.appspot.com/o/2023-10-20%20132021191-379663637_630804189042392_265397635741634822_n.jpg?" +
+                "generation=1697782821940462&alt=media");
         userRepository.save(userT5);
 
         User userS1 = new User();
@@ -73,6 +88,9 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         userS1.setLastname("Of America");
         userS1.setPassword("passwasdord");
         userS1.setRoles(List.of(Role.ROLE_STUDENT));
+        userS1.setImage("https://scontent.fcnx4-1.fna.fbcdn.net/v/t39.30808-6/291835562_2105836552922182_2431088402003081743_n.jpg?" +
+                "_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeFOR0VBiRt3Ko0FS8vVfzArJ9QtBjb3BnEn1C0GNvcGcUu5vibA-sbZNGEFiZrEvOsFx5HQtAUowWr7dBfjFbWP&_nc_ohc" +
+                "=8d3MxE6EJjoAX8XHFfJ&_nc_ht=scontent.fcnx4-1.fna&cb_e2o_trans=q&oh=00_AfBXZbpx_3BQQ1IF2cHybczx_1iZ4BTTyAlYEjCF2_Gjcg&oe=65370DD2");
         userRepository.save(userS1);
 
         User userS2 = new User();
@@ -81,6 +99,9 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         userS2.setLastname("Pattana");
         userS2.setPassword("passwasdord");
         userS2.setRoles(List.of(Role.ROLE_STUDENT));
+        userS2.setImage("https://scontent.fcnx4-1.fna.fbcdn.net/v/t39.30808-6/291835562_2105836552922182_2431088402003081743_n.jpg?" +
+                "_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeFOR0VBiRt3Ko0FS8vVfzArJ9QtBjb3BnEn1C0GNvcGcUu5vibA-sbZNGEFiZrEvOsFx5HQtAUowWr7dBfjFbWP&_nc_ohc" +
+                "=8d3MxE6EJjoAX8XHFfJ&_nc_ht=scontent.fcnx4-1.fna&cb_e2o_trans=q&oh=00_AfBXZbpx_3BQQ1IF2cHybczx_1iZ4BTTyAlYEjCF2_Gjcg&oe=65370DD2");
         userRepository.save(userS2);
 
         User userS3 = new User();
@@ -89,6 +110,9 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         userS3.setLastname("Nuchrungruang");
         userS3.setPassword("HoiLodZ");
         userS3.setRoles(List.of(Role.ROLE_STUDENT));
+        userS3.setImage("https://scontent.fcnx4-1.fna.fbcdn.net/v/t39.30808-6/291835562_2105836552922182_2431088402003081743_n.jpg?" +
+                "_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeFOR0VBiRt3Ko0FS8vVfzArJ9QtBjb3BnEn1C0GNvcGcUu5vibA-sbZNGEFiZrEvOsFx5HQtAUowWr7dBfjFbWP&_nc_ohc" +
+                "=8d3MxE6EJjoAX8XHFfJ&_nc_ht=scontent.fcnx4-1.fna&cb_e2o_trans=q&oh=00_AfBXZbpx_3BQQ1IF2cHybczx_1iZ4BTTyAlYEjCF2_Gjcg&oe=65370DD2");
         userRepository.save(userS3);
 
         User userS4 = new User();
@@ -97,6 +121,9 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         userS4.setLastname("Bankai");
         userS4.setPassword("HelloWorld");
         userS4.setRoles(List.of(Role.ROLE_STUDENT));
+        userS4.setImage("https://scontent.fcnx4-1.fna.fbcdn.net/v/t39.30808-6/291835562_2105836552922182_2431088402003081743_n.jpg?" +
+                "_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeFOR0VBiRt3Ko0FS8vVfzArJ9QtBjb3BnEn1C0GNvcGcUu5vibA-sbZNGEFiZrEvOsFx5HQtAUowWr7dBfjFbWP&_nc_ohc" +
+                "=8d3MxE6EJjoAX8XHFfJ&_nc_ht=scontent.fcnx4-1.fna&cb_e2o_trans=q&oh=00_AfBXZbpx_3BQQ1IF2cHybczx_1iZ4BTTyAlYEjCF2_Gjcg&oe=65370DD2");
         userRepository.save(userS4);
 
         User userS5 = new User();
@@ -105,6 +132,9 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         userS5.setLastname("ThumJaiKul");
         userS5.setPassword("EiEi");
         userS5.setRoles(List.of(Role.ROLE_STUDENT));
+        userS5.setImage("https://scontent.fcnx4-1.fna.fbcdn.net/v/t39.30808-6/291835562_2105836552922182_2431088402003081743_n.jpg?" +
+                "_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeFOR0VBiRt3Ko0FS8vVfzArJ9QtBjb3BnEn1C0GNvcGcUu5vibA-sbZNGEFiZrEvOsFx5HQtAUowWr7dBfjFbWP&_nc_ohc" +
+                "=8d3MxE6EJjoAX8XHFfJ&_nc_ht=scontent.fcnx4-1.fna&cb_e2o_trans=q&oh=00_AfBXZbpx_3BQQ1IF2cHybczx_1iZ4BTTyAlYEjCF2_Gjcg&oe=65370DD2");
         userRepository.save(userS5);
 
         User userS6 = new User();
@@ -113,6 +143,9 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         userS6.setLastname("Django");
         userS6.setPassword("Fullfilling");
         userS6.setRoles(List.of(Role.ROLE_STUDENT));
+        userS6.setImage("https://scontent.fcnx4-1.fna.fbcdn.net/v/t39.30808-6/291835562_2105836552922182_2431088402003081743_n.jpg?" +
+                "_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeFOR0VBiRt3Ko0FS8vVfzArJ9QtBjb3BnEn1C0GNvcGcUu5vibA-sbZNGEFiZrEvOsFx5HQtAUowWr7dBfjFbWP&_nc_ohc" +
+                "=8d3MxE6EJjoAX8XHFfJ&_nc_ht=scontent.fcnx4-1.fna&cb_e2o_trans=q&oh=00_AfBXZbpx_3BQQ1IF2cHybczx_1iZ4BTTyAlYEjCF2_Gjcg&oe=65370DD2");
         userRepository.save(userS6);
 
         User userS7 = new User();
@@ -121,6 +154,9 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         userS7.setLastname("Ruler of Asgard");
         userS7.setPassword("Ragnarok");
         userS7.setRoles(List.of(Role.ROLE_STUDENT));
+        userS7.setImage("https://scontent.fcnx4-1.fna.fbcdn.net/v/t39.30808-6/291835562_2105836552922182_2431088402003081743_n.jpg?" +
+                "_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeFOR0VBiRt3Ko0FS8vVfzArJ9QtBjb3BnEn1C0GNvcGcUu5vibA-sbZNGEFiZrEvOsFx5HQtAUowWr7dBfjFbWP&_nc_ohc" +
+                "=8d3MxE6EJjoAX8XHFfJ&_nc_ht=scontent.fcnx4-1.fna&cb_e2o_trans=q&oh=00_AfBXZbpx_3BQQ1IF2cHybczx_1iZ4BTTyAlYEjCF2_Gjcg&oe=65370DD2");
         userRepository.save(userS7);
 
         User userS8 = new User();
@@ -129,6 +165,9 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         userS8.setLastname("Former Ruler of Asgard");
         userS8.setPassword("Odin123");
         userS8.setRoles(List.of(Role.ROLE_STUDENT));
+        userS8.setImage("https://scontent.fcnx4-1.fna.fbcdn.net/v/t39.30808-6/291835562_2105836552922182_2431088402003081743_n.jpg?" +
+                "_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeFOR0VBiRt3Ko0FS8vVfzArJ9QtBjb3BnEn1C0GNvcGcUu5vibA-sbZNGEFiZrEvOsFx5HQtAUowWr7dBfjFbWP&_nc_ohc" +
+                "=8d3MxE6EJjoAX8XHFfJ&_nc_ht=scontent.fcnx4-1.fna&cb_e2o_trans=q&oh=00_AfBXZbpx_3BQQ1IF2cHybczx_1iZ4BTTyAlYEjCF2_Gjcg&oe=65370DD2");
         userRepository.save(userS8);
 
         User userS9 = new User();
@@ -137,6 +176,9 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         userS9.setLastname("Odin hater");
         userS9.setPassword("IHATEASGARD");
         userS9.setRoles(List.of(Role.ROLE_STUDENT));
+        userS9.setImage("https://scontent.fcnx4-1.fna.fbcdn.net/v/t39.30808-6/291835562_2105836552922182_2431088402003081743_n.jpg?" +
+                "_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeFOR0VBiRt3Ko0FS8vVfzArJ9QtBjb3BnEn1C0GNvcGcUu5vibA-sbZNGEFiZrEvOsFx5HQtAUowWr7dBfjFbWP&_nc_ohc" +
+                "=8d3MxE6EJjoAX8XHFfJ&_nc_ht=scontent.fcnx4-1.fna&cb_e2o_trans=q&oh=00_AfBXZbpx_3BQQ1IF2cHybczx_1iZ4BTTyAlYEjCF2_Gjcg&oe=65370DD2");
         userRepository.save(userS9);
 
         User userS10 = new User();
@@ -145,6 +187,9 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         userS10.setLastname("Parker");
         userS10.setPassword("ILOVEMJ");
         userS10.setRoles(List.of(Role.ROLE_STUDENT));
+        userS10.setImage("https://scontent.fcnx4-1.fna.fbcdn.net/v/t39.30808-6/291835562_2105836552922182_2431088402003081743_n.jpg?" +
+                "_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeFOR0VBiRt3Ko0FS8vVfzArJ9QtBjb3BnEn1C0GNvcGcUu5vibA-sbZNGEFiZrEvOsFx5HQtAUowWr7dBfjFbWP&_nc_ohc" +
+                "=8d3MxE6EJjoAX8XHFfJ&_nc_ht=scontent.fcnx4-1.fna&cb_e2o_trans=q&oh=00_AfBXZbpx_3BQQ1IF2cHybczx_1iZ4BTTyAlYEjCF2_Gjcg&oe=65370DD2");
         userRepository.save(userS10);
 
         User userS11 = new User();
@@ -153,6 +198,9 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         userS11.setLastname("FanJa");
         userS11.setPassword("ILOVEFANJA");
         userS11.setRoles(List.of(Role.ROLE_STUDENT));
+        userS11.setImage("https://scontent.fcnx4-1.fna.fbcdn.net/v/t39.30808-6/291835562_2105836552922182_2431088402003081743_n.jpg?" +
+                "_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeFOR0VBiRt3Ko0FS8vVfzArJ9QtBjb3BnEn1C0GNvcGcUu5vibA-sbZNGEFiZrEvOsFx5HQtAUowWr7dBfjFbWP&_nc_ohc" +
+                "=8d3MxE6EJjoAX8XHFfJ&_nc_ht=scontent.fcnx4-1.fna&cb_e2o_trans=q&oh=00_AfBXZbpx_3BQQ1IF2cHybczx_1iZ4BTTyAlYEjCF2_Gjcg&oe=65370DD2");
         userRepository.save(userS11);
 
         User userS12 = new User();
@@ -161,6 +209,9 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         userS12.setLastname("Inyeo");
         userS12.setPassword("Yeager");
         userS12.setRoles(List.of(Role.ROLE_STUDENT));
+        userS12.setImage("https://scontent.fcnx4-1.fna.fbcdn.net/v/t39.30808-6/291835562_2105836552922182_2431088402003081743_n.jpg?" +
+                "_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeFOR0VBiRt3Ko0FS8vVfzArJ9QtBjb3BnEn1C0GNvcGcUu5vibA-sbZNGEFiZrEvOsFx5HQtAUowWr7dBfjFbWP&_nc_ohc" +
+                "=8d3MxE6EJjoAX8XHFfJ&_nc_ht=scontent.fcnx4-1.fna&cb_e2o_trans=q&oh=00_AfBXZbpx_3BQQ1IF2cHybczx_1iZ4BTTyAlYEjCF2_Gjcg&oe=65370DD2");
         userRepository.save(userS12);
 
 

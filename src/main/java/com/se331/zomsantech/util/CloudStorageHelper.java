@@ -18,13 +18,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
+@Component
+
 public class CloudStorageHelper {
     private static Storage storage = null;
 
     static{
         InputStream serviceAccount = null;
         try {
-            serviceAccount = new ClassPathResource("se-lab-331-imageuplaod-cbb6a55743a8.json").getInputStream();
+            serviceAccount = new ClassPathResource("se-lab-331-imageuplaod-cbb6a55743a8~035f07f.json").getInputStream();
             storage = StorageOptions.newBuilder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                     .setProjectId("se-lab-331-imageuplaod")
