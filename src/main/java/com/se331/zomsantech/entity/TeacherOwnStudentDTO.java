@@ -14,4 +14,5 @@ public class TeacherOwnStudentDTO {
     String name;
     String surname;
     String image;
+    String email;
 }

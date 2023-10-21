@@ -33,6 +33,7 @@ public interface LabMapper {
     @Mapping(source = "user.id", target = "id")
     @Mapping(source = "user.lastname", target = "surname")
     @Mapping(source = "user.image", target = "image")
+    @Mapping(source = "user.email", target = "email")
     TeacherOwnStudentDTO getTeacherOwnStudentDTO(Student student);
 
     @Mapping(source = "user.id", target = "id")
@@ -48,6 +49,7 @@ public interface LabMapper {
     @Mapping(source = "user.lastname", target = "lastname")
 //    @Mapping(source = "user.id", target = "id")
     @Mapping(source = "user.image", target = "image")
+    @Mapping(source = "user.email", target = "email")
     StudentDTO getStudentDTO(Student student);
 
     @Mapping(source = "student.id", target = "studentId")

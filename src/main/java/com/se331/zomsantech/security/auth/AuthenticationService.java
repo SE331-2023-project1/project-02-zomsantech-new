@@ -72,7 +72,7 @@ public class AuthenticationService {
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         saveUserToken(savedUser, jwtToken);
-        return AuthenticationResponse.success(jwtToken, refreshToken, user.getRoles());
+        return AuthenticationResponse.successStudent(jwtToken, refreshToken, user.getRoles(),student.getId());
     }
 
     public AuthenticationResponse teacherRegister(RegisterRequest request) {
@@ -99,7 +99,7 @@ public class AuthenticationService {
         var jwtToken = jwtService.generateToken(advisor);
         var refreshToken = jwtService.generateRefreshToken(advisor);
         saveUserToken(savedUser, jwtToken);
-        return AuthenticationResponse.success(jwtToken, refreshToken, advisor.getRoles());
+        return AuthenticationResponse.successTeacher(jwtToken, refreshToken, advisor.getRoles(), teacher.getId());
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {

@@ -53,38 +53,47 @@ public class CloudStorageHelper {
         return blobInfo.getMediaLink();
     }
 
-    public String getImageUrl(MultipartFile file, final String bucket) throws IOException, ServletException {
+    public String getFileUrl(MultipartFile file, final String bucket) throws IOException, ServletException {
         final String fileName = file.getOriginalFilename();
         if (fileName != null && !fileName.isEmpty() && fileName.contains(".")) {
             final String extension = fileName.substring(fileName.lastIndexOf('.')+ 1);
             String[] allowedExt = { "jpg", "jpeg", "png", "gif" };
-            for (String s : allowedExt) {
-                if (extension.equals(s)) {
+//            for (String s : allowedExt) {
+//                if (extension.equals(s)) {
                     return this.uploadFile(file, bucket);
-                }
-            }
-            throw new ServletException("file must be an image");
+//                }
+//            }
+//            throw new ServletException("file must be an image");
         }
         return null;
     }
 
 
-    public StorageFileDTO getStorageFileDto(MultipartFile file, final String bucket)
-            throws IOException, ServletException {
-        final String fileName = file.getOriginalFilename();
-        // Check file extension
+//    public StorageFileDTO getStorageFileDto(MultipartFile file, final String bucket)
+//            throws IOException, ServletException {
+//        final String fileName = file.getOriginalFilename();
+//        // Check file extension
+//
+//        if (fileName != null && !fileName.isEmpty() && fileName.contains(".")) {
+//            final String extension = fileName.substring(fileName.lastIndexOf('.')+ 1);
+//                    String urlName = this.uploadFile(file, bucket);
+//                    return StorageFileDTO.builder().name(urlName).build();
+//        }
+//        return null; }
 
-        if (fileName != null && !fileName.isEmpty() && fileName.contains(".")) {
-            final String extension = fileName.substring(fileName.lastIndexOf('.')+ 1);
-            String[] allowedExt = { "jpg", "jpeg", "png", "gif" };
+public String getImageUrl(MultipartFile file, final String bucket) throws IOException, ServletException {
+    final String fileName = file.getOriginalFilename();
+    if (fileName != null && !fileName.isEmpty() && fileName.contains(".")) {
+        final String extension = fileName.substring(fileName.lastIndexOf('.')+ 1);
+        String[] allowedExt = { "jpg", "jpeg", "png", "gif" };
             for (String s : allowedExt) {
                 if (extension.equals(s)) {
-                    String urlName = this.uploadFile(file, bucket);
-                    return StorageFileDTO.builder().name(urlName).build();
+        return this.uploadFile(file, bucket);
                 }
             }
             throw new ServletException("file must be an image");
-        }
-        return null;
     }
+    return null;
+}
+
 }
