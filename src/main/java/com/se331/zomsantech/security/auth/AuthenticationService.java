@@ -112,6 +112,16 @@ public class AuthenticationService {
         User user = repository.findByUsername(request.getUsername())
                 .orElseThrow();
 
+        Long teacherId = null;
+        Long studentId = null;
+
+        if (user.getTeacher() != null) {
+            teacherId = user.getTeacher().getId();
+        }
+        if (user.getStudent() != null) {
+            studentId = user.getStudent().getId();
+        }
+
         // user.getId()
         // user.getUserName()
 
@@ -126,6 +136,8 @@ public class AuthenticationService {
                 .userRole(userRoles)
                 .userName(user.getUsername())
                 .id(user.getId())
+                .teacherId(teacherId)
+                .studentId(studentId)
                 .build();
     }
 
