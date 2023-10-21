@@ -3,6 +3,7 @@ package com.se331.zomsantech.service;
 import com.se331.zomsantech.entity.Comment;
 import com.se331.zomsantech.entity.Student;
 import com.se331.zomsantech.entity.Teacher;
+import com.se331.zomsantech.exception.ResourceNotFoundException;
 import com.se331.zomsantech.repository.CommentRepository;
 import com.se331.zomsantech.repository.StudentRepository;
 import com.se331.zomsantech.repository.TeacherRepository;
@@ -46,9 +47,10 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Comment replyComment(Long studentId, Long teacherId,Long commentId, String content) {
-        Comment parentComment = commentRepository.findById(commentId).orElse(null);
-        Student student = studentRepository.findById(studentId).orElse(null);
-        Teacher teacher = teacherRepository.findById(teacherId).orElse(null);
+        Comment parentComment = commentRepository.findById(commentId).orElseThrow(() -> new ResourceNotFoundException("Comment not found with ID: " + commentId));
+        Student student = studentRepository.findById(studentId).orElseThrow(() -> new ResourceNotFoundException("Student not found with ID: " + studentId));
+        Teacher teacher = teacherRepository.findById(teacherId).orElseThrow(() -> new ResourceNotFoundException("Teacher not found with ID: " + teacherId));
+
         // teacher for reference in case change advisor
         // student as an reply author
 
@@ -64,6 +66,10 @@ public class CommentServiceImpl implements CommentService {
         }
     }
 
+
+//    public List<Comment> getAllCommentsByStudentId(Long studentId) {
+//        return commentRepository.findAllByStudentId(studentId);
+//    }
     @Override
     public List<Comment> getAllCommentsByStudentId(Long studentId) {
         return commentRepository.findAllByStudentId(studentId);

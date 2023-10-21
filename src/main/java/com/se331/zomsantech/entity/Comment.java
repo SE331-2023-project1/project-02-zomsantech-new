@@ -30,4 +30,5 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "parent_comment_id")
     Comment parentComment;
+
 }

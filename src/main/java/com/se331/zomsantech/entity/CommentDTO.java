@@ -15,4 +15,7 @@ public class CommentDTO {
     Long studentId;
     Long teacherId;
 
+    CommentDTO reply;
+
+
 }

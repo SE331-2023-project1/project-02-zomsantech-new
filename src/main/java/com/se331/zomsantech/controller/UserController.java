@@ -4,6 +4,9 @@ import com.se331.zomsantech.entity.DetailedTeacherDTO;
 import com.se331.zomsantech.entity.Student;
 import com.se331.zomsantech.entity.StudentDTO;
 import com.se331.zomsantech.entity.Teacher;
+import com.se331.zomsantech.exception.StudentNotFoundException;
+import com.se331.zomsantech.exception.TeacherNotFoundException;
+import com.se331.zomsantech.exception.UserNotFoundException;
 import com.se331.zomsantech.repository.StudentRepository;
 import com.se331.zomsantech.repository.TeacherRepository;
 import com.se331.zomsantech.security.user.User;
@@ -71,16 +74,19 @@ public class UserController {
     @GetMapping("/students/{id}")
     public ResponseEntity<?> getStudentById(@PathVariable("id") Long id) {
         Student studentopt = studentService.getStudent(id);
+        if (studentopt == null) {
+            throw new StudentNotFoundException(id);
+        }
         return ResponseEntity.ok(LabMapper.INSTANCE.getStudentDTO(studentopt));
     }
 
     @PutMapping("/students/{id}")
     public ResponseEntity<?> updateStudent(@PathVariable("id") Long id, @RequestBody User user) {
         User updatedUser = studentService.updateStudent(id, user);
-        if (updatedUser != null) {
-            return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(updatedUser));
+        if (updatedUser == null) {
+            throw new UserNotFoundException(id);
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Student not found");
+            return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(updatedUser));
         }
     }
 
@@ -116,16 +122,21 @@ public class UserController {
     @GetMapping("/teachers/{id}")
     public ResponseEntity<?> getTeacherById(@PathVariable("id") Long id) {
         Teacher teacherOpt = teacherService.getTeacher(id);
-        return ResponseEntity.ok(LabMapper.INSTANCE.getDetailedTeacherDTO(teacherOpt));
+
+        if (teacherOpt == null) {
+            throw new TeacherNotFoundException(id);
+        } else {
+            return ResponseEntity.ok(LabMapper.INSTANCE.getDetailedTeacherDTO(teacherOpt));
+        }
 
     }
     @PutMapping("/teachers/{id}")
     public ResponseEntity<?> updateTeacher(@PathVariable("id") Long id, @RequestBody User user) {
         User updatedUser = teacherService.updateTeacher(id, user);
-        if (updatedUser != null) {
-            return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(updatedUser));
+        if (updatedUser == null) {
+            throw new UserNotFoundException(id);
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Teacher not found");
+            return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(updatedUser));
         }
     }
 
