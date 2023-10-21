@@ -10,6 +10,8 @@ import com.se331.zomsantech.security.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,11 +28,22 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
     @Transactional
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
 
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+
+        User admin = new User();
+        admin.setUsername("admin");
+        admin.setFirstname("admin");
+        admin.setLastname("admin");
+        admin.setPassword(encoder.encode("admin"));
+        admin.setEmail("admin@admin.com");
+        admin.setRoles(List.of(Role.ROLE_ADMIN));
+        userRepository.save(admin);
+
         User userT1 = new User();
-        userT1.setUsername("MM");
-        userT1.setFirstname("Mr. Mock");
-        userT1.setLastname("Kingbird");
-        userT1.setPassword("password");
+        userT1.setUsername("teacher");
+        userT1.setFirstname("teacher");
+        userT1.setLastname("teacher");
+        userT1.setPassword(encoder.encode("teacher"));
         userT1.setRoles(List.of(Role.ROLE_TEACHER));
         userT1.setImage("https://storage.googleapis.com/download/storage/v1/b/" +
                 "se-lab-331-imageuplaod.appspot.com/o/2023-10-20%20132021191-379663637_630804189042392_265397635741634822_n.jpg?" +
@@ -83,10 +96,10 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         userRepository.save(userT5);
 
         User userS1 = new User();
-        userS1.setUsername("Thiwakon");
-        userS1.setFirstname("Solid State");
-        userS1.setLastname("Of America");
-        userS1.setPassword("passwasdord");
+        userS1.setUsername("student");
+        userS1.setFirstname("student");
+        userS1.setLastname("student");
+        userS1.setPassword(encoder.encode("student"));
         userS1.setRoles(List.of(Role.ROLE_STUDENT));
         userS1.setImage("https://scontent.fcnx4-1.fna.fbcdn.net/v/t39.30808-6/291835562_2105836552922182_2431088402003081743_n.jpg?" +
                 "_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeFOR0VBiRt3Ko0FS8vVfzArJ9QtBjb3BnEn1C0GNvcGcUu5vibA-sbZNGEFiZrEvOsFx5HQtAUowWr7dBfjFbWP&_nc_ohc" +
