@@ -120,6 +120,7 @@ public class UserController {
 
     }
     @PutMapping("/teachers/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<?> updateTeacher(@PathVariable("id") Long id, @RequestBody User user) {
         User updatedUser = teacherService.updateTeacher(id, user);
         if (updatedUser != null) {

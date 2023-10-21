@@ -19,8 +19,10 @@ public class ZomsantechApplication {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
-						.allowedOrigins("http://localhost:3000").exposedHeaders("x-total-count");
-
+						.allowedOrigins("http://localhost:3000").exposedHeaders("x-total-count")
+						.allowedMethods("GET","POST","PUT","DELETE","HEAD","OPTIONS")
+						.allowCredentials(true)
+						.allowedHeaders("Origin","Authorization","application/json","Content-Type");
 			}
 		};
 	}
