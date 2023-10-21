@@ -53,7 +53,7 @@ public interface LabMapper {
     StudentDTO getStudentDTO(Student student);
 
 
-    CommentDTO getCommentDTO(Comment comment);
+//    CommentDTO getCommentDTO(Comment comment);
 
-    List<CommentDTO> getCommentDTO(List<Comment> comments, List<Comment> replies);
+//    List<CommentDTO> getCommentDTO(List<Comment> comments, List<Comment> replies);
 }
