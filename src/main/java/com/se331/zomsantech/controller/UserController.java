@@ -114,6 +114,7 @@ public class UserController {
     }
 
     @GetMapping("/teachers/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<?> getTeacherById(@PathVariable("id") Long id) {
         Teacher teacherOpt = teacherService.getTeacher(id);
         return ResponseEntity.ok(LabMapper.INSTANCE.getDetailedTeacherDTO(teacherOpt));
