@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.se331.zomsantech.entity.Teacher;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -19,5 +20,5 @@ public interface TeacherService {
 
     Teacher save(Teacher teacher);
 
-    User updateTeacher(Long id, User updatedUser);
+    User updateTeacher(Long id, User updatedUser, MultipartFile imageFile);
 }

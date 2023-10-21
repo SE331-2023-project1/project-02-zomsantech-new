@@ -19,7 +19,6 @@ import java.util.Arrays;
 import java.util.Date;
 
 @Component
-
 public class CloudStorageHelper {
     private static Storage storage = null;
 
@@ -67,19 +66,6 @@ public class CloudStorageHelper {
         }
         return null;
     }
-
-
-//    public StorageFileDTO getStorageFileDto(MultipartFile file, final String bucket)
-//            throws IOException, ServletException {
-//        final String fileName = file.getOriginalFilename();
-//        // Check file extension
-//
-//        if (fileName != null && !fileName.isEmpty() && fileName.contains(".")) {
-//            final String extension = fileName.substring(fileName.lastIndexOf('.')+ 1);
-//                    String urlName = this.uploadFile(file, bucket);
-//                    return StorageFileDTO.builder().name(urlName).build();
-//        }
-//        return null; }
 
 public String getImageUrl(MultipartFile file, final String bucket) throws IOException, ServletException {
     final String fileName = file.getOriginalFilename();

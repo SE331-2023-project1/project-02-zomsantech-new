@@ -1,12 +1,15 @@
 package com.se331.zomsantech.security.auth;
 
 import com.se331.zomsantech.security.user.UserProfileDTO;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
@@ -17,17 +20,19 @@ public class AuthenticationController {
 
   private final AuthenticationService service;
 
-  @PostMapping("/register/student")
+  @PostMapping(value = "/register/student", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   public ResponseEntity<AuthenticationResponse> studentRegister(
-      @RequestBody RegisterRequest request
-  ) {
-    return ResponseEntity.ok(service.studentRegister(request));
+          @ModelAttribute RegisterRequest request,
+          @RequestPart("image") MultipartFile image
+  ) throws ServletException, IOException {
+    return ResponseEntity.ok(service.studentRegister(request,image));
   }
-  @PostMapping("/register/teacher")
+  @PostMapping(value = "/register/teacher", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   public ResponseEntity<AuthenticationResponse> teacherRegister(
-          @RequestBody RegisterRequest request
-  ) {
-    return ResponseEntity.ok(service.teacherRegister(request));
+          @ModelAttribute RegisterRequest request,
+          @RequestPart("image") MultipartFile image
+  ) throws ServletException, IOException {
+    return ResponseEntity.ok(service.teacherRegister(request,image));
   }
   @PostMapping("/login")
   public ResponseEntity<AuthenticationResponse> authenticate(

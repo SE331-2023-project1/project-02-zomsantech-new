@@ -14,9 +14,12 @@ import com.se331.zomsantech.security.user.Role;
 import com.se331.zomsantech.security.user.User;
 import com.se331.zomsantech.security.user.UserProfileDTO;
 import com.se331.zomsantech.security.user.UserRepository;
+import com.se331.zomsantech.util.CloudStorageHelper;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,6 +27,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import java.io.IOException;
@@ -40,11 +44,17 @@ public class AuthenticationService {
     private final TeacherRepository teacherRepository;
     private final StudentRepository studentRepository;
 
-    public AuthenticationResponse studentRegister(RegisterRequest request) {
+    @Autowired
+    private CloudStorageHelper cloudStorageHelper;
+
+    public AuthenticationResponse studentRegister(RegisterRequest request, MultipartFile image) throws ServletException, IOException {
         if (repository.existsByUsername(request.getUsername())) {
             ErrorResponse errorResponse = new ErrorResponse(403,"Duplicate Username");
             return AuthenticationResponse.error(errorResponse);
         }
+
+        String imageUrl = cloudStorageHelper.getImageUrl(image, "se-lab-331-imageuplaod.appspot.com");
+
         User user = User.builder()
                 .username(request.getUsername())
                 .firstname(request.getFirstname())
@@ -52,6 +62,7 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .roles(List.of(Role.ROLE_STUDENT))
+                .image(imageUrl)
                 .build();
 
         var savedUser = repository.save(user);
@@ -75,12 +86,15 @@ public class AuthenticationService {
         return AuthenticationResponse.successStudent(jwtToken, refreshToken, user.getRoles(),student.getId());
     }
 
-    public AuthenticationResponse teacherRegister(RegisterRequest request) {
+    public AuthenticationResponse teacherRegister(RegisterRequest request,MultipartFile image) throws ServletException, IOException {
 
         if (repository.existsByUsername(request.getUsername())) {
             ErrorResponse errorResponse = new ErrorResponse(403,"Duplicate Username");
             return AuthenticationResponse.error(errorResponse);
         }
+
+        String imageUrl = cloudStorageHelper.getImageUrl(image, "se-lab-331-imageuplaod.appspot.com");
+
 
         User advisor = User.builder()
                 .username(request.getUsername())
@@ -89,6 +103,7 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .roles(List.of(Role.ROLE_TEACHER))
+                .image(imageUrl)
                 .build();
 
         Teacher teacher = new Teacher();

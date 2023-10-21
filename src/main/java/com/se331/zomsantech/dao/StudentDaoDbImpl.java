@@ -6,14 +6,19 @@ import com.se331.zomsantech.entity.Teacher;
 import com.se331.zomsantech.repository.StudentRepository;
 import com.se331.zomsantech.security.user.User;
 import com.se331.zomsantech.security.user.UserRepository;
+import com.se331.zomsantech.util.CloudStorageHelper;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.ServletException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +28,8 @@ import java.util.Optional;
 public class StudentDaoDbImpl implements StudentDao {
     final StudentRepository studentRepository;
     final UserRepository userRepository;
+    @Autowired
+    private CloudStorageHelper cloudStorageHelper;
     @Override
     public Integer getStudentSize() {
         return Math.toIntExact(studentRepository.count());
@@ -49,7 +56,7 @@ public class StudentDaoDbImpl implements StudentDao {
     }
 
     @Override
-    public User updateStudent(Long id, User updatedUser) {
+    public User updateStudent(Long id, User updatedUser, MultipartFile imageFile) {
         return studentRepository.findById(id)
                 .map(student -> {
                     User user = student.getUser();
@@ -68,10 +75,20 @@ public class StudentDaoDbImpl implements StudentDao {
                     if (updatedUser.getPassword() != null) {
                         user.setPassword(updatedUser.getPassword());
                     }
-                    if (updatedUser.getImage() != null) {
-                        user.setImage(updatedUser.getImage());
+//                    if (updatedUser.getImage() != null) {
+//                        user.setImage(updatedUser.getImage());
+//                    }
+                    if (imageFile != null && !imageFile.isEmpty()) {
+                        String imageUrl = null;
+                        try {
+                            imageUrl = cloudStorageHelper.getImageUrl(imageFile, "se-lab-331-imageuplaod.appspot.com");
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        } catch (ServletException e) {
+                            throw new RuntimeException(e);
+                        }
+                        user.setImage(imageUrl);
                     }
-                    // map other necessary fields from User to User here
                     return userRepository.save(user);
                 })
                 .orElse(null);

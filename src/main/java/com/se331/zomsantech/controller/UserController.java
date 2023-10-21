@@ -1,5 +1,6 @@
 package com.se331.zomsantech.controller;
 
+import com.se331.zomsantech.dao.StudentDao;
 import com.se331.zomsantech.entity.DetailedTeacherDTO;
 import com.se331.zomsantech.entity.Student;
 import com.se331.zomsantech.entity.StudentDTO;
@@ -20,6 +21,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -57,18 +59,11 @@ public class UserController {
         perPage = perPage == null ? 20 : perPage;
         page = page == null ? 1 : page;
         List<Student> pageOutput;
-//        if (filter == null) {
-            pageOutput = studentRepository.findAll();
-//        }
-//        else {
-//            pageOutput = studentService.getStudents(filter, PageRequest.of(page - 1, perPage));
-//        }
-//        HttpHeaders responseHeader = new HttpHeaders();
-//        responseHeader.set("x-total-count", String.valueOf(pageOutput.size()));
+
+        pageOutput = studentRepository.findAll();
+
         return ResponseEntity.ok(LabMapper.INSTANCE.getStudentDTO(pageOutput));
-//                pageOutput.getContent().stream()
-//                .map(LabMapper.INSTANCE::getStudentDTO)
-//                .collect(Collectors.toList()), responseHeader, HttpStatus.OK);
+
     }
 
     @GetMapping("/students/{id}")
@@ -80,16 +75,18 @@ public class UserController {
         return ResponseEntity.ok(LabMapper.INSTANCE.getStudentDTO(studentopt));
     }
 
-    @PutMapping("/students/{id}")
-    public ResponseEntity<?> updateStudent(@PathVariable("id") Long id, @RequestBody User user) {
-        User updatedUser = studentService.updateStudent(id, user);
+    // (value = "/register/teacher", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(value = "/students/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> updateStudent(@PathVariable("id") Long id,
+                                           @ModelAttribute User user,
+                                           @RequestPart("images") MultipartFile imageFile) {
+        User updatedUser = studentService.updateStudent(id, user, imageFile);
         if (updatedUser == null) {
             throw new UserNotFoundException(id);
         } else {
             return ResponseEntity.ok(LabMapper.INSTANCE.getUserDTO(updatedUser));
         }
     }
-
 
 
     @GetMapping("/teachers")
@@ -99,24 +96,10 @@ public class UserController {
         perPage = perPage == null ? 3 : perPage;
         page = page == null ? 1 : page;
         List<Teacher> pageOutput;
-
-//        if (filter == null) {
-
-            pageOutput = teacherRepository.findAll();
-
-//        } else {
-//            pageOutput = teacherService.getTeachers(filter, PageRequest.of(page - 1, perPage));
-//        }
-
-
-//        HttpHeaders responseHeader = new HttpHeaders();
-//        responseHeader.set("x-total-count", String.valueOf(pageOutput.getTotalElements()));
+        pageOutput = teacherRepository.findAll();
         return ResponseEntity.ok(pageOutput.stream().map(LabMapper.INSTANCE::getDetailedTeacherDTO));
 
 
-//                pageOutput.getContent().stream()
-//                .map(LabMapper.INSTANCE::getDetailedTeacherDTO)
-//                .collect(Collectors.toList()), responseHeader, HttpStatus.OK);
     }
 
     @GetMapping("/teachers/{id}")
@@ -131,10 +114,13 @@ public class UserController {
         }
 
     }
-    @PutMapping("/teachers/{id}")
+
+    @PutMapping(value = "/teachers/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<?> updateTeacher(@PathVariable("id") Long id, @RequestBody User user) {
-        User updatedUser = teacherService.updateTeacher(id, user);
+    public ResponseEntity<?> updateTeacher(@PathVariable("id") Long id,
+                                           @ModelAttribute User user,
+                                           @RequestPart("images") MultipartFile imageFile) {
+        User updatedUser = teacherService.updateTeacher(id, user, imageFile);
         if (updatedUser == null) {
             throw new UserNotFoundException(id);
         } else {

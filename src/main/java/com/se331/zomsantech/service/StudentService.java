@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.se331.zomsantech.entity.Student;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public interface StudentService {
 
     Student save(Student student);
 
-    User updateStudent(Long id, User user);
+    User updateStudent(Long id, User user, MultipartFile image );
 
     User findUserByStudentId(Long studentUserId);
 }

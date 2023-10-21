@@ -4,13 +4,18 @@ import com.se331.zomsantech.entity.Teacher;
 import com.se331.zomsantech.repository.TeacherRepository;
 import com.se331.zomsantech.security.user.User;
 import com.se331.zomsantech.security.user.UserRepository;
+import com.se331.zomsantech.util.CloudStorageHelper;
+import jakarta.servlet.ServletException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Repository
@@ -19,6 +24,8 @@ import java.util.List;
 public class TeacherDaoDbImpl implements TeacherDao {
     final TeacherRepository teacherRepository;
     final UserRepository userRepository;
+    @Autowired
+    private CloudStorageHelper cloudStorageHelper;
     @Override
     public Integer getTeacherSize() {
         return Math.toIntExact(teacherRepository.count());
@@ -45,7 +52,7 @@ public class TeacherDaoDbImpl implements TeacherDao {
     }
 
     @Override
-    public User updateTeacher(Long id, User updatedUser) {
+    public User updateTeacher(Long id, User updatedUser, MultipartFile imageFile) {
         return teacherRepository.findById(id)
                 .map(teacher -> {
                     User user = teacher.getUser();
@@ -67,7 +74,17 @@ public class TeacherDaoDbImpl implements TeacherDao {
                     if (updatedUser.getImage() != null) {
                         user.setImage(updatedUser.getImage());
                     }
-                    // map other necessary fields from User to User here
+                    if (imageFile != null && !imageFile.isEmpty()) {
+                        String imageUrl = null;
+                        try {
+                            imageUrl = cloudStorageHelper.getImageUrl(imageFile, "se-lab-331-imageuplaod.appspot.com");
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        } catch (ServletException e) {
+                            throw new RuntimeException(e);
+                        }
+                        user.setImage(imageUrl);
+                    }
                     return userRepository.save(user);
                 })
                 .orElse(null);
