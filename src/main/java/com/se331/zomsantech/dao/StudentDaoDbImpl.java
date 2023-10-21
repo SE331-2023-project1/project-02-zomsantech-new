@@ -34,8 +34,8 @@ public class StudentDaoDbImpl implements StudentDao {
     }
 
     @Override
-    public List<Student> getStudents(Integer pageSize, Integer page) {
-        return studentRepository.findAll();
+    public Page<Student> getStudents(Integer pageSize, Integer page) {
+        return studentRepository.findAll(PageRequest.of(page - 1, pageSize));
     }
 
     @Override

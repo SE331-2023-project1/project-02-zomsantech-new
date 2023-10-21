@@ -13,7 +13,7 @@ import java.util.List;
 public interface StudentService {
     Integer getStudentsSize();
 
-    List<Student> getStudents(Integer pageSize, Integer page);
+    Page<Student> getStudents(Integer pageSize, Integer page);
 
     Page<Student> getStudents(String filter, Pageable pageable);
 

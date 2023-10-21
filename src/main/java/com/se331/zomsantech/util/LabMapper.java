@@ -53,7 +53,8 @@ public interface LabMapper {
     StudentDTO getStudentDTO(Student student);
 
 
-//    CommentDTO getCommentDTO(Comment comment);
-//
-//    List<CommentDTO> getCommentDTO(List<Comment> comments, List<Comment> replies);
+    @Mapping(source = "replies", target = "replies")
+    CommentDTO getCommentDTO(Comment comment);
+
+    List<CommentDTO> getCommentDTO(List<Comment> comments);
 }
