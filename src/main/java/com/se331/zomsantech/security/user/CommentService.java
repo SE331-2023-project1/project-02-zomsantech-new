@@ -1,6 +1,7 @@
 package com.se331.zomsantech.security.user;
 
 import com.se331.zomsantech.util.LabMapper;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,33 +15,25 @@ public class CommentService {
     @Autowired
     private CommentRepository commentRepository;
 
+    @Autowired
+    private LabMapper labMapper;
+
     public Comment addComment(Comment comment) {
         System.out.println(comment);
         return commentRepository.save(comment);
     }
 
-    public List<Comment> getRepliesForComment(Integer commentId) {
-        return commentRepository.findAllByParentCommentId(commentId);
-    }
-
-    private LabMapper labMapper;
-
     public List<CommentDTO> getCommentsForUser(Integer userId) {
-        List<Comment> mainComments = commentRepository.findAllByTargetUserIdAndParentCommentIsNull(userId);
+        List<Comment> mainComments = commentRepository.findByTargetUserIdAndParentCommentIsNull(userId);
 
         List<CommentDTO> result = new ArrayList<>();
         for (Comment mainComment : mainComments) {
-            List<Comment> replies = commentRepository.findAllByParentCommentId(mainComment.getId());
-            CommentDTO dto = labMapper.getCommentDTO(mainComment);
-            dto.setReplies(labMapper.getCommentDTO(replies));  // set replies using LabMapper
+            List<Comment> replies = commentRepository.findByParentCommentId(mainComment.getId());
+            CommentDTO dto = new CommentDTO(mainComment, replies);
             result.add(dto);
         }
 
         return result;
-    }
-
-    public List<Comment> getCommentsByUser(Integer userId) {
-        return commentRepository.findAllByAuthorId(userId);
     }
 
     public Comment replyToComment(Integer commentId, Comment reply) {
@@ -51,3 +44,8 @@ public class CommentService {
         return commentRepository.save(reply);
     }
 }
+
+
+
+
+

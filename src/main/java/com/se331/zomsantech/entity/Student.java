@@ -21,7 +21,6 @@ public class Student {
     String department;
     @ManyToOne
     Teacher teacher;
-
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;

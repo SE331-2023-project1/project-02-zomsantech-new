@@ -112,7 +112,6 @@ public class UserController {
         return ResponseEntity.ok(LabMapper.INSTANCE.getDetailedTeacherDTO(teacherOpt));
 
     }
-
     @PutMapping("/teachers/{id}")
     public ResponseEntity<?> updateTeacher(@PathVariable("id") Long id, @RequestBody User user) {
         User updatedUser = teacherService.updateTeacher(id, user);
@@ -132,4 +131,6 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
         }
     }
+
+
 }

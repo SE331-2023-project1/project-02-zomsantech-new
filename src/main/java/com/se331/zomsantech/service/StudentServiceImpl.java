@@ -3,6 +3,7 @@ package com.se331.zomsantech.service;
 import com.se331.zomsantech.dao.StudentDao;
 import com.se331.zomsantech.entity.Student;
 import com.se331.zomsantech.entity.StudentDTO;
+import com.se331.zomsantech.repository.StudentRepository;
 import com.se331.zomsantech.security.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class StudentServiceImpl implements StudentService {
     final StudentDao studentDao;
+    private final StudentRepository studentRepository;
     @Override
     public Integer getStudentsSize() {
         return studentDao.getStudentSize();
@@ -43,4 +45,10 @@ public class StudentServiceImpl implements StudentService {
         return studentDao.updateStudent(id, user);
     }
 
+    @Override
+    public User findUserByStudentId(Long studentId) {
+        return studentRepository.findById(studentId)
+                .map(Student::getUser)
+                .orElseThrow(() -> new IllegalArgumentException("Student not found"));
+    }
 }
