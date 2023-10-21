@@ -30,6 +30,12 @@ public class AuthenticationResponse {
   @JsonProperty("user_id")
   private Integer id;
 
+  @JsonProperty("student_id")
+  private Long studentId;
+
+  @JsonProperty("teacher_id")
+  private Long teacherId;
+
 
 //  private OrganizerAuthDTO user;
 
@@ -37,11 +43,21 @@ public class AuthenticationResponse {
   private ErrorResponse error;
 
 
-  public static AuthenticationResponse success(String accessToken, String refreshToken, List<Role> userRole) {
+  public static AuthenticationResponse successStudent(String accessToken, String refreshToken, List<Role> userRole, Long studentId) {
     return AuthenticationResponse.builder()
             .accessToken(accessToken)
             .refreshToken(refreshToken)
             .userRole(userRole)
+            .studentId(studentId)
+            .build();
+  }
+
+  public static AuthenticationResponse successTeacher(String accessToken, String refreshToken, List<Role> userRole, Long teacherId) {
+    return AuthenticationResponse.builder()
+            .accessToken(accessToken)
+            .refreshToken(refreshToken)
+            .userRole(userRole)
+            .teacherId(teacherId)
             .build();
   }
 
