@@ -15,6 +15,7 @@ public class StudentDTO {
     Long id;
     String image;
     String department;
+    String email;
     TeacherBriefDTO teacher;
     String username;
     String firstname;

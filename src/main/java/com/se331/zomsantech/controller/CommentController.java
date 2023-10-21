@@ -45,26 +45,16 @@ public class CommentController {
         }
     }
 
-//    @GetMapping("/student/{studentId}")
-//    public ResponseEntity<List<CommentDTO>> getAllCommentsByStudentId(@PathVariable Long studentId) {
-//        List<CommentDTO> commentsDTO = commentService.getAllCommentsByStudentId(studentId)
-//                .stream()
-//                .map(LabMapper.INSTANCE::commentToCommentDTO)
-//                .collect(Collectors.toList());
-//        return ResponseEntity.ok(commentsDTO);
-//    }
+
 @GetMapping("/student/{studentId}")
 public ResponseEntity<List<CommentDTO>> getAllCommentsByStudentId(@PathVariable Long studentId) {
-    // รับ comments ทั้งหมดจาก student ด้วย ID ที่กำหนด
     List<Comment> allComments = commentService.getAllCommentsByStudentId(studentId);
 
-    // กรองเฉพาะ comments ที่ไม่มี parentComment
     List<CommentDTO> mainCommentsDTO = allComments.stream()
             .filter(comment -> comment.getParentComment() == null)
             .map(comment -> {
                 CommentDTO mainCommentDTO = LabMapper.INSTANCE.commentToCommentDTO(comment);
 
-                // หา reply สำหรับ comment หลักนี้
                 Comment replyComment = allComments.stream()
                         .filter(c -> c.getParentComment() != null && c.getParentComment().getId().equals(comment.getId()))
                         .findFirst()

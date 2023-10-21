@@ -49,10 +49,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
       UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
 
-//      System.out.println("hahaha");
-//      System.out.println(userEmail);
-//      System.out.println(userDetails);
-
       boolean isTokenValid = tokenRepository.findByToken(jwt)
               .map(t -> !t.isExpired() && !t.isRevoked())
               .orElse(false);
