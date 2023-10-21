@@ -12,7 +12,7 @@ import java.util.List;
 public interface StudentDao {
     Integer getStudentSize();
     Student save(Student student);
-    List<Student> getStudents(Integer pageSize, Integer page);
+    Page<Student> getStudents(Integer pageSize, Integer page);
     Page<Student> getStudents(String filter, Pageable page);
     Student getStudent(Long id);
     User updateStudent(Long id, User updatedUser);

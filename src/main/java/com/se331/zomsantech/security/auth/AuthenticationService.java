@@ -42,7 +42,7 @@ public class AuthenticationService {
 
     public AuthenticationResponse studentRegister(RegisterRequest request) {
         if (repository.existsByUsername(request.getUsername())) {
-            ErrorResponse errorResponse = new ErrorResponse("Duplicate Username");
+            ErrorResponse errorResponse = new ErrorResponse(403,"Duplicate Username");
             return AuthenticationResponse.error(errorResponse);
         }
         User user = User.builder()
@@ -78,7 +78,7 @@ public class AuthenticationService {
     public AuthenticationResponse teacherRegister(RegisterRequest request) {
 
         if (repository.existsByUsername(request.getUsername())) {
-            ErrorResponse errorResponse = new ErrorResponse("Duplicate Username");
+            ErrorResponse errorResponse = new ErrorResponse(403,"Duplicate Username");
             return AuthenticationResponse.error(errorResponse);
         }
 

@@ -1,8 +1,6 @@
 package com.se331.zomsantech.util;
 
 import com.se331.zomsantech.entity.*;
-import com.se331.zomsantech.security.user.Comment;
-import com.se331.zomsantech.security.user.CommentDTO;
 import com.se331.zomsantech.security.user.User;
 import com.se331.zomsantech.security.user.UserDTO;
 import org.mapstruct.Mapper;
@@ -52,8 +50,20 @@ public interface LabMapper {
     @Mapping(source = "user.image", target = "image")
     StudentDTO getStudentDTO(Student student);
 
+    @Mapping(source = "student.id", target = "studentId")
+    @Mapping(source = "teacher.id", target = "teacherId")
+    CommentDTO commentToCommentDTO(Comment comment);
+//    CommentDTO commentToCommentDTO(Comment comment);
 
-//    CommentDTO getCommentDTO(Comment comment);
-//
-//    List<CommentDTO> getCommentDTO(List<Comment> comments, List<Comment> replies);
+    default CommentDTO replyToCommentDTO(Comment comment) {
+        if (comment == null) return null;
+        return CommentDTO.builder()
+                .id(comment.getId())
+                .content(comment.getContent())
+                .studentId(comment.getStudent().getId())
+                .teacherId(comment.getTeacher() != null ? comment.getTeacher().getId() : null)
+                .build();
+    }
+
+
 }

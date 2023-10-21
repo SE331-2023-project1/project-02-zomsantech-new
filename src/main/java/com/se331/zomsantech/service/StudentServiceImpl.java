@@ -23,7 +23,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<Student> getStudents(Integer pageSize, Integer page) {
+    public Page<Student> getStudents(Integer pageSize, Integer page) {
         return studentDao.getStudents(pageSize, page);
     }
 
