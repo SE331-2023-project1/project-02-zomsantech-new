@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -33,8 +34,8 @@ public class StudentDaoDbImpl implements StudentDao {
     }
 
     @Override
-    public Page<Student> getStudents(Integer pageSize, Integer page) {
-        return studentRepository.findAll(PageRequest.of(page - 1, pageSize));
+    public List<Student> getStudents(Integer pageSize, Integer page) {
+        return studentRepository.findAll();
     }
 
     @Override

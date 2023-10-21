@@ -33,7 +33,7 @@ public class UserController {
 
     private final StudentRepository studentRepository;
     private final UserRepository userRepository;
-    private final TeacherRepository teacherRepository; // ถ้าคุณมี TeacherRepository
+    private final TeacherRepository teacherRepository;
 
     private final TeacherService teacherService;
     private final StudentService studentService;
@@ -53,17 +53,19 @@ public class UserController {
                                             @RequestParam(value = "_filter", required = false) String filter) {
         perPage = perPage == null ? 20 : perPage;
         page = page == null ? 1 : page;
-        Page<Student> pageOutput;
-        if (filter == null) {
-            pageOutput = studentService.getStudents(perPage, page);
-        } else {
-            pageOutput = studentService.getStudents(filter, PageRequest.of(page - 1, perPage));
-        }
-        HttpHeaders responseHeader = new HttpHeaders();
-        responseHeader.set("x-total-count", String.valueOf(pageOutput.getTotalElements()));
-        return new ResponseEntity<>(pageOutput.getContent().stream()
-                .map(LabMapper.INSTANCE::getStudentDTO)
-                .collect(Collectors.toList()), responseHeader, HttpStatus.OK);
+        List<Student> pageOutput;
+//        if (filter == null) {
+            pageOutput = studentRepository.findAll();
+//        }
+//        else {
+//            pageOutput = studentService.getStudents(filter, PageRequest.of(page - 1, perPage));
+//        }
+//        HttpHeaders responseHeader = new HttpHeaders();
+//        responseHeader.set("x-total-count", String.valueOf(pageOutput.size()));
+        return ResponseEntity.ok(LabMapper.INSTANCE.getStudentDTO(pageOutput));
+//                pageOutput.getContent().stream()
+//                .map(LabMapper.INSTANCE::getStudentDTO)
+//                .collect(Collectors.toList()), responseHeader, HttpStatus.OK);
     }
 
     @GetMapping("/students/{id}")
@@ -90,20 +92,25 @@ public class UserController {
                                             @RequestParam(value = "_filter", required = false) String filter) {
         perPage = perPage == null ? 3 : perPage;
         page = page == null ? 1 : page;
-        Page<Teacher> pageOutput;
+        List<Teacher> pageOutput;
 
-        if (filter == null) {
-            pageOutput = teacherService.getTeachers(perPage, page);
-        } else {
-            pageOutput = teacherService.getTeachers(filter, PageRequest.of(page - 1, perPage));
-        }
+//        if (filter == null) {
+
+            pageOutput = teacherRepository.findAll();
+
+//        } else {
+//            pageOutput = teacherService.getTeachers(filter, PageRequest.of(page - 1, perPage));
+//        }
 
 
-        HttpHeaders responseHeader = new HttpHeaders();
-        responseHeader.set("x-total-count", String.valueOf(pageOutput.getTotalElements()));
-        return new ResponseEntity<>(pageOutput.getContent().stream()
-                .map(LabMapper.INSTANCE::getDetailedTeacherDTO)
-                .collect(Collectors.toList()), responseHeader, HttpStatus.OK);
+//        HttpHeaders responseHeader = new HttpHeaders();
+//        responseHeader.set("x-total-count", String.valueOf(pageOutput.getTotalElements()));
+        return ResponseEntity.ok(pageOutput.stream().map(LabMapper.INSTANCE::getDetailedTeacherDTO));
+
+
+//                pageOutput.getContent().stream()
+//                .map(LabMapper.INSTANCE::getDetailedTeacherDTO)
+//                .collect(Collectors.toList()), responseHeader, HttpStatus.OK);
     }
 
     @GetMapping("/teachers/{id}")

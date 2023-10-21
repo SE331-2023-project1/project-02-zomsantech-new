@@ -6,10 +6,12 @@ import org.springframework.data.domain.Pageable;
 
 import com.se331.zomsantech.entity.Teacher;
 
+import java.util.List;
+
 public interface TeacherService {
     Integer getTeachersSize();
 
-    Page<Teacher> getTeachers(Integer pageSize, Integer page);
+    List<Teacher> getTeachers(Integer pageSize, Integer page);
 
     Page<Teacher> getTeachers(String title, Pageable pageable);
 

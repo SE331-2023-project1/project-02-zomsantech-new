@@ -24,17 +24,39 @@
 //    }
 //
 //    public List<CommentDTO> getCommentsForUser(Integer userId) {
-//        List<Comment> mainComments = commentRepository.findByTargetUserIdAndParentCommentIsNull(userId);
+//        List<Comment> allComments = commentRepository.findByTargetUserId(userId);
 //
-//        List<CommentDTO> result = new ArrayList<>();
-//        for (Comment mainComment : mainComments) {
-//            List<Comment> replies = commentRepository.findByParentCommentId(mainComment.getId());
-//            CommentDTO dto = new CommentDTO(mainComment, replies);
-//            result.add(dto);
+//        Map<Integer, CommentDTO> commentMap = new HashMap<>();
+//
+//        for (Comment comment : allComments) {
+//            if (comment.getParentComment() == null) {
+//                // Main comment
+//                CommentDTO dto = convertToDTO(comment);
+//                dto.setReplies(new ArrayList<>());
+//                commentMap.put(comment.getId(), dto);
+//            } else {
+//                // Reply comment
+//                CommentDTO parentDto = commentMap.get(comment.getParentComment().getId());
+//                if (parentDto != null) {
+//                    CommentDTO replyDto = convertToDTO(comment);
+//                    parentDto.getReplies().add(replyDto);
+//                    commentMap.remove(comment.getParentComment().getId());
+//                }
+//            }
 //        }
 //
-//        return result;
+//        return new ArrayList<>(commentMap.values());
 //    }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //    public Comment replyToComment(Integer commentId, Comment reply) {
 //        Comment parentComment = commentRepository.findById(commentId)

@@ -11,6 +11,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @RequiredArgsConstructor
 @Profile("db")
@@ -28,8 +30,8 @@ public class TeacherDaoDbImpl implements TeacherDao {
     }
 
     @Override
-    public Page<Teacher> getTeachers(Integer pageSize, Integer page) {
-        return teacherRepository.findAll(PageRequest.of(page - 1, pageSize));
+    public List<Teacher> getTeachers(Integer pageSize, Integer page) {
+        return teacherRepository.findAll();
     }
 
     @Override
