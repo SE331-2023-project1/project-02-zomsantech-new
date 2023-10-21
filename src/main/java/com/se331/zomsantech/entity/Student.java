@@ -24,4 +24,7 @@ public class Student {
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "student")
+    List<Comment> comments;
 }
