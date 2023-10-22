@@ -58,12 +58,17 @@ public class UserController {
                                             @RequestParam(value = "_filter", required = false) String filter) {
         perPage = perPage == null ? 20 : perPage;
         page = page == null ? 1 : page;
-        
-        List<Student> pageOutput;
-
-        pageOutput = studentRepository.findAll();
-
-        return ResponseEntity.ok(LabMapper.INSTANCE.getStudentDTO(pageOutput));
+        Page<Student> pageOutput;
+        if (filter == null) {
+            pageOutput = studentService.getStudents(perPage, page);
+        } else {
+            pageOutput = studentService.getStudents(filter, PageRequest.of(page - 1, perPage));
+        }
+        HttpHeaders responseHeader = new HttpHeaders();
+        responseHeader.set("x-total-count", String.valueOf(pageOutput.getTotalElements()));
+        return new ResponseEntity<>(pageOutput.getContent().stream()
+                .map(LabMapper.INSTANCE::getStudentDTO)
+                .collect(Collectors.toList()), responseHeader, HttpStatus.OK);
 
     }
 
