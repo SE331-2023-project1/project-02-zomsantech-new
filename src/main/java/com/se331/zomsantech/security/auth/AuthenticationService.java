@@ -27,6 +27,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -47,7 +49,7 @@ public class AuthenticationService {
     @Autowired
     private CloudStorageHelper cloudStorageHelper;
 
-    public AuthenticationResponse studentRegister(RegisterRequest request, MultipartFile image) throws ServletException, IOException {
+    public AuthenticationResponse studentRegister(RegisterRequest request, @RequestPart(name = "image", required = false)MultipartFile image) throws ServletException, IOException {
         if (repository.existsByUsername(request.getUsername())) {
             ErrorResponse errorResponse = new ErrorResponse(403,"Duplicate Username");
             return AuthenticationResponse.error(errorResponse);
@@ -86,7 +88,7 @@ public class AuthenticationService {
         return AuthenticationResponse.successStudent(jwtToken, refreshToken, user.getRoles(),student.getId());
     }
 
-    public AuthenticationResponse teacherRegister(RegisterRequest request,MultipartFile image) throws ServletException, IOException {
+    public AuthenticationResponse teacherRegister(RegisterRequest request,@RequestPart(name = "image", required = false)MultipartFile image) throws ServletException, IOException {
 
         if (repository.existsByUsername(request.getUsername())) {
             ErrorResponse errorResponse = new ErrorResponse(403,"Duplicate Username");

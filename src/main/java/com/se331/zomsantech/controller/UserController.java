@@ -79,7 +79,7 @@ public class UserController {
     @PutMapping(value = "/students/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> updateStudent(@PathVariable("id") Long id,
                                            @ModelAttribute User user,
-                                           @RequestPart("images") MultipartFile imageFile) {
+                                           @RequestPart(name = "images", required = false) MultipartFile imageFile) {
         User updatedUser = studentService.updateStudent(id, user, imageFile);
         if (updatedUser == null) {
             throw new UserNotFoundException(id);
@@ -119,7 +119,7 @@ public class UserController {
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<?> updateTeacher(@PathVariable("id") Long id,
                                            @ModelAttribute User user,
-                                           @RequestPart("images") MultipartFile imageFile) {
+                                           @RequestPart(name = "images", required = false) MultipartFile imageFile) {
         User updatedUser = teacherService.updateTeacher(id, user, imageFile);
         if (updatedUser == null) {
             throw new UserNotFoundException(id);
