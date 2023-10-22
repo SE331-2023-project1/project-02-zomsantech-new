@@ -19,6 +19,10 @@ public interface LabMapper {
     UserDTO getUserDTO(User user);
     List<UserDTO> getUserDTO(List<User> users);
 
+    AnnouncementDTO getAnnouncementDTO(User user);
+
+    List<AnnouncementDTO> getAnnouncementDTO(List<Announcement> announcements);
+
 //    @Mapping(source = "user.id", target = "id")
     @Mapping(source = "user.username", target = "username")
     @Mapping(source = "user.firstname", target = "firstname")
@@ -51,6 +55,8 @@ public interface LabMapper {
     @Mapping(source = "user.image", target = "image")
     @Mapping(source = "user.email", target = "email")
     StudentDTO getStudentDTO(Student student);
+
+    AnnouncementDTO getAnnouncementDTO(Announcement announcement);
 
     @Mapping(source = "student.id", target = "studentId")
     @Mapping(source = "teacher.id", target = "teacherId")
