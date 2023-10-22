@@ -58,6 +58,7 @@ public class UserController {
                                             @RequestParam(value = "_filter", required = false) String filter) {
         perPage = perPage == null ? 20 : perPage;
         page = page == null ? 1 : page;
+        
         List<Student> pageOutput;
 
         pageOutput = studentRepository.findAll();
@@ -76,7 +77,7 @@ public class UserController {
     }
 
     // (value = "/register/teacher", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @PutMapping(value = "/students/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(value = "/students/{id}")
     public ResponseEntity<?> updateStudent(@PathVariable("id") Long id,
                                            @RequestBody User user) {
         User updatedUser = studentService.updateStudent(id, user);
@@ -114,7 +115,7 @@ public class UserController {
 
     }
 
-    @PutMapping(value = "/teachers/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(value = "/teachers/{id}")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<?> updateTeacher(@PathVariable("id") Long id,
                                            @RequestBody User user

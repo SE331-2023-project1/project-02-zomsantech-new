@@ -12,7 +12,7 @@ import java.util.List;
 public interface TeacherService {
     Integer getTeachersSize();
 
-    List<Teacher> getTeachers(Integer pageSize, Integer page);
+    Page<Teacher> getTeachers(Integer pageSize, Integer page);
 
     Page<Teacher> getTeachers(String title, Pageable pageable);
 

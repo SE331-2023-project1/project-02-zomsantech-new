@@ -37,8 +37,8 @@ public class TeacherDaoDbImpl implements TeacherDao {
     }
 
     @Override
-    public List<Teacher> getTeachers(Integer pageSize, Integer page) {
-        return teacherRepository.findAll();
+    public Page<Teacher> getTeachers(Integer pageSize, Integer page) {
+        return teacherRepository.findAll(PageRequest.of(page - 1, pageSize));
     }
 
     @Override
