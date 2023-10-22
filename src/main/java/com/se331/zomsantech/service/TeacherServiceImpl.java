@@ -41,7 +41,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public User updateTeacher(Long id, User updatedUser, MultipartFile imageFile) {
-        return teacherDao.updateTeacher(id, updatedUser, imageFile);
+    public User updateTeacher(Long id, User updatedUser) {
+        return teacherDao.updateTeacher(id, updatedUser);
     }
 }

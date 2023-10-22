@@ -27,22 +27,11 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     private TeacherRepository teacherRepository;
 
     @Override
-    public Announcement createAnnouncement(Long teacherId, Announcement announcement, MultipartFile files) {
+    public Announcement createAnnouncement(Long teacherId, Announcement announcement) {
         Optional<Teacher> teacherOpt = teacherRepository.findById(teacherId);
 
-
         announcement.setTeacher(teacherOpt.get());
-        if (files != null && !files.isEmpty()) {
-            String filesUrl = null;
-            try {
-                filesUrl = cloudStorageHelper.getFileUrl(files, "se-lab-331-imageuplaod.appspot.com");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (ServletException e) {
-                throw new RuntimeException(e);
-            }
-            announcement.setFile(filesUrl);
-        }
+        announcement.setFile(announcement.getFile());
 
         return announcementRepository.save(announcement);
     }

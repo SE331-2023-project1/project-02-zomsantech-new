@@ -78,9 +78,8 @@ public class UserController {
     // (value = "/register/teacher", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PutMapping(value = "/students/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> updateStudent(@PathVariable("id") Long id,
-                                           @ModelAttribute User user,
-                                           @RequestPart(name = "images", required = false) MultipartFile imageFile) {
-        User updatedUser = studentService.updateStudent(id, user, imageFile);
+                                           @RequestBody User user) {
+        User updatedUser = studentService.updateStudent(id, user);
         if (updatedUser == null) {
             throw new UserNotFoundException(id);
         } else {
@@ -118,9 +117,9 @@ public class UserController {
     @PutMapping(value = "/teachers/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<?> updateTeacher(@PathVariable("id") Long id,
-                                           @ModelAttribute User user,
-                                           @RequestPart(name = "images", required = false) MultipartFile imageFile) {
-        User updatedUser = teacherService.updateTeacher(id, user, imageFile);
+                                           @RequestBody User user
+                                          ) {
+        User updatedUser = teacherService.updateTeacher(id, user);
         if (updatedUser == null) {
             throw new UserNotFoundException(id);
         } else {

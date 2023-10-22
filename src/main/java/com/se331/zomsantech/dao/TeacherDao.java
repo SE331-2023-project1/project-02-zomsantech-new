@@ -15,5 +15,5 @@ public interface TeacherDao {
     Page<Teacher> getTeachers(String name, Pageable page);
     Teacher getTeacher(Long id);
 
-    User updateTeacher(Long id, User updatedUser, MultipartFile imageFile);
+    User updateTeacher(Long id, User updatedUser);
 }

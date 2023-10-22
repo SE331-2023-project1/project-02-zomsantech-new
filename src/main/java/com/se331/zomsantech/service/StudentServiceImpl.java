@@ -44,8 +44,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public User updateStudent(Long id, User user, MultipartFile image) {
-        return studentDao.updateStudent(id, user, image);
+    public User updateStudent(Long id, User user) {
+        return studentDao.updateStudent(id, user);
     }
 
     @Override

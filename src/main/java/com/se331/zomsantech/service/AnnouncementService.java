@@ -9,6 +9,6 @@ import java.util.List;
 @Service
 public interface AnnouncementService {
 
-    Announcement createAnnouncement(Long teacherId, Announcement announcement, MultipartFile files);
+    Announcement createAnnouncement(Long teacherId, Announcement announcement);
 
 }

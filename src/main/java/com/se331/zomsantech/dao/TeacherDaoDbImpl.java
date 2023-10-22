@@ -52,7 +52,7 @@ public class TeacherDaoDbImpl implements TeacherDao {
     }
 
     @Override
-    public User updateTeacher(Long id, User updatedUser, MultipartFile imageFile) {
+    public User updateTeacher(Long id, User updatedUser) {
         return teacherRepository.findById(id)
                 .map(teacher -> {
                     User user = teacher.getUser();
@@ -73,17 +73,6 @@ public class TeacherDaoDbImpl implements TeacherDao {
                     }
                     if (updatedUser.getImage() != null) {
                         user.setImage(updatedUser.getImage());
-                    }
-                    if (imageFile != null && !imageFile.isEmpty()) {
-                        String imageUrl = null;
-                        try {
-                            imageUrl = cloudStorageHelper.getImageUrl(imageFile, "se-lab-331-imageuplaod.appspot.com");
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        } catch (ServletException e) {
-                            throw new RuntimeException(e);
-                        }
-                        user.setImage(imageUrl);
                     }
                     return userRepository.save(user);
                 })

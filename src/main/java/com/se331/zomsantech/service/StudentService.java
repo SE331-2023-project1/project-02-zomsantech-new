@@ -22,7 +22,7 @@ public interface StudentService {
 
     Student save(Student student);
 
-    User updateStudent(Long id, User user, MultipartFile image );
+    User updateStudent(Long id, User user);
 
     User findUserByStudentId(Long studentUserId);
 }

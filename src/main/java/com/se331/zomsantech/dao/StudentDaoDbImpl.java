@@ -56,7 +56,7 @@ public class StudentDaoDbImpl implements StudentDao {
     }
 
     @Override
-    public User updateStudent(Long id, User updatedUser, MultipartFile imageFile) {
+    public User updateStudent(Long id, User updatedUser) {
         return studentRepository.findById(id)
                 .map(student -> {
                     User user = student.getUser();
@@ -75,19 +75,8 @@ public class StudentDaoDbImpl implements StudentDao {
                     if (updatedUser.getPassword() != null) {
                         user.setPassword(updatedUser.getPassword());
                     }
-//                    if (updatedUser.getImage() != null) {
-//                        user.setImage(updatedUser.getImage());
-//                    }
-                    if (imageFile != null && !imageFile.isEmpty()) {
-                        String imageUrl = null;
-                        try {
-                            imageUrl = cloudStorageHelper.getImageUrl(imageFile, "se-lab-331-imageuplaod.appspot.com");
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        } catch (ServletException e) {
-                            throw new RuntimeException(e);
-                        }
-                        user.setImage(imageUrl);
+                    if (updatedUser.getImage() != null) {
+                        user.setImage(updatedUser.getImage());
                     }
                     return userRepository.save(user);
                 })

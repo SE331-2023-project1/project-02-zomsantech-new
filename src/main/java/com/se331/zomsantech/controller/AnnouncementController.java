@@ -33,8 +33,8 @@ public class AnnouncementController {
 
 
     @PostMapping
-    public ResponseEntity<AnnouncementDTO> createAnnouncement(@RequestParam("teacherId") Long teacherId, @ModelAttribute Announcement announcement, @RequestPart("files") MultipartFile files) {
-        AnnouncementDTO announcementDTO = LabMapper.INSTANCE.getAnnouncementDTO(announcementService.createAnnouncement(teacherId, announcement, files));
+    public ResponseEntity<AnnouncementDTO> createAnnouncement(@RequestParam("teacherId") Long teacherId, @RequestBody Announcement announcement) {
+        AnnouncementDTO announcementDTO = LabMapper.INSTANCE.getAnnouncementDTO(announcementService.createAnnouncement(teacherId, announcement));
         return ResponseEntity.ok(announcementDTO);
 
     }

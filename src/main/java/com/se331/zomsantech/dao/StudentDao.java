@@ -16,6 +16,6 @@ public interface StudentDao {
     Page<Student> getStudents(Integer pageSize, Integer page);
     Page<Student> getStudents(String filter, Pageable page);
     Student getStudent(Long id);
-    User updateStudent(Long id, User updatedUser, MultipartFile imageFile);
+    User updateStudent(Long id, User updatedUser);
     //    Teacher getTeacherOfStudent(Long studentId);
 }

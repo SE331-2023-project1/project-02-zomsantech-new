@@ -17,4 +17,5 @@ public class RegisterRequest {
   private String password;
   private Long studentUserId;
   private Long teacherUserId;
+  private String image;
 }

@@ -20,5 +20,5 @@ public interface TeacherService {
 
     Teacher save(Teacher teacher);
 
-    User updateTeacher(Long id, User updatedUser, MultipartFile imageFile);
+    User updateTeacher(Long id, User updatedUser);
 }

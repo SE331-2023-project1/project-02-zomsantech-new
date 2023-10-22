@@ -49,13 +49,13 @@ public class AuthenticationService {
     @Autowired
     private CloudStorageHelper cloudStorageHelper;
 
-    public AuthenticationResponse studentRegister(RegisterRequest request, @RequestPart(name = "image", required = false)MultipartFile image) throws ServletException, IOException {
+    public AuthenticationResponse studentRegister(RegisterRequest request) throws ServletException, IOException {
         if (repository.existsByUsername(request.getUsername())) {
             ErrorResponse errorResponse = new ErrorResponse(403,"Duplicate Username");
             return AuthenticationResponse.error(errorResponse);
         }
 
-        String imageUrl = cloudStorageHelper.getImageUrl(image, "se-lab-331-imageuplaod.appspot.com");
+//        String imageUrl = cloudStorageHelper.getImageUrl(image, "se-lab-331-imageuplaod.appspot.com");
 
         User user = User.builder()
                 .username(request.getUsername())
@@ -64,7 +64,7 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .roles(List.of(Role.ROLE_STUDENT))
-                .image(imageUrl)
+                .image(request.getImage())
                 .build();
 
         var savedUser = repository.save(user);
@@ -88,14 +88,14 @@ public class AuthenticationService {
         return AuthenticationResponse.successStudent(jwtToken, refreshToken, user.getRoles(),student.getId());
     }
 
-    public AuthenticationResponse teacherRegister(RegisterRequest request,@RequestPart(name = "image", required = false)MultipartFile image) throws ServletException, IOException {
+    public AuthenticationResponse teacherRegister(RegisterRequest request) throws ServletException, IOException {
 
         if (repository.existsByUsername(request.getUsername())) {
             ErrorResponse errorResponse = new ErrorResponse(403,"Duplicate Username");
             return AuthenticationResponse.error(errorResponse);
         }
 
-        String imageUrl = cloudStorageHelper.getImageUrl(image, "se-lab-331-imageuplaod.appspot.com");
+//        String imageUrl = cloudStorageHelper.getImageUrl(image, "se-lab-331-imageuplaod.appspot.com");
 
 
         User advisor = User.builder()
@@ -105,7 +105,7 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .roles(List.of(Role.ROLE_TEACHER))
-                .image(imageUrl)
+                .image(request.getImage())
                 .build();
 
         Teacher teacher = new Teacher();

@@ -20,19 +20,17 @@ public class AuthenticationController {
 
   private final AuthenticationService service;
 
-  @PostMapping(value = "/register/student", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  @PostMapping("/register/student")
   public ResponseEntity<AuthenticationResponse> studentRegister(
-          @ModelAttribute RegisterRequest request,
-          @RequestPart("image") MultipartFile image
+          @RequestBody RegisterRequest request
   ) throws ServletException, IOException {
-    return ResponseEntity.ok(service.studentRegister(request,image));
+    return ResponseEntity.ok(service.studentRegister(request));
   }
-  @PostMapping(value = "/register/teacher", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  @PostMapping("/register/teacher")
   public ResponseEntity<AuthenticationResponse> teacherRegister(
-          @ModelAttribute RegisterRequest request,
-          @RequestPart("image") MultipartFile image
+          @RequestBody RegisterRequest request
   ) throws ServletException, IOException {
-    return ResponseEntity.ok(service.teacherRegister(request,image));
+    return ResponseEntity.ok(service.teacherRegister(request));
   }
   @PostMapping("/login")
   public ResponseEntity<AuthenticationResponse> authenticate(
