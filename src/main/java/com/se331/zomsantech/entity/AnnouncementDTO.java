@@ -11,6 +11,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AnnouncementDTO {
     Long id;
+    String username;
+    String firstname;
+    String lastname;
+    String image;
     String title;
     String description;
     String date;

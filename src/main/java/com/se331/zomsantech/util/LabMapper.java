@@ -56,6 +56,10 @@ public interface LabMapper {
     @Mapping(source = "user.email", target = "email")
     StudentDTO getStudentDTO(Student student);
 
+    @Mapping(source = "teacher.user.firstname", target = "firstname")
+    @Mapping(source = "teacher.user.lastname", target = "lastname")
+    @Mapping(source = "teacher.user.username", target = "username")
+    @Mapping(source = "teacher.user.image", target = "image")
     AnnouncementDTO getAnnouncementDTO(Announcement announcement);
 
     @Mapping(source = "student.id", target = "studentId")

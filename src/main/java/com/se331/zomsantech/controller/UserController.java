@@ -81,7 +81,7 @@ public class UserController {
         return ResponseEntity.ok(LabMapper.INSTANCE.getStudentDTO(studentopt));
     }
 
-    // (value = "/register/teacher", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+
     @PutMapping(value = "/students/{id}")
     public ResponseEntity<?> updateStudent(@PathVariable("id") Long id,
                                            @RequestBody User user) {
@@ -98,11 +98,20 @@ public class UserController {
     public ResponseEntity<?> getAllTeachers(@RequestParam(value = "_limit", required = false) Integer perPage,
                                             @RequestParam(value = "_page", required = false) Integer page,
                                             @RequestParam(value = "_filter", required = false) String filter) {
-        perPage = perPage == null ? 3 : perPage;
+        perPage = perPage == null ? 20 : perPage;
         page = page == null ? 1 : page;
-        List<Teacher> pageOutput;
-        pageOutput = teacherRepository.findAll();
-        return ResponseEntity.ok(pageOutput.stream().map(LabMapper.INSTANCE::getDetailedTeacherDTO));
+        Page<Teacher> pageOutput;
+
+        if (filter == null) {
+            pageOutput = teacherService.getTeachers(perPage, page);
+        } else {
+            pageOutput = teacherService.getTeachers(filter, PageRequest.of(page - 1, perPage));
+        }
+        HttpHeaders responseHeader = new HttpHeaders();
+        responseHeader.set("x-total-count", String.valueOf(pageOutput.getTotalElements()));
+        return new ResponseEntity<>(pageOutput.getContent().stream()
+                .map(LabMapper.INSTANCE::getDetailedTeacherDTO)
+                .collect(Collectors.toList()), responseHeader, HttpStatus.OK);
 
 
     }
