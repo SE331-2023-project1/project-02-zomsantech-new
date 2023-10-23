@@ -25,4 +25,6 @@ public interface StudentService {
     User updateStudent(Long id, User user);
 
     User findUserByStudentId(Long studentUserId);
+
+    Page<Student> getStudentTeacherIsNull(Integer perPage, Integer page);
 }

@@ -7,6 +7,7 @@ import com.se331.zomsantech.repository.StudentRepository;
 import com.se331.zomsantech.security.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -53,5 +54,12 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.findById(studentId)
                 .map(Student::getUser)
                 .orElseThrow(() -> new IllegalArgumentException("Student not found"));
+    }
+
+
+
+    @Override
+    public Page<Student> getStudentTeacherIsNull(Integer perPage, Integer page) {
+        return studentRepository.findByTeacherIsNull(PageRequest.of(page - 1, perPage));
     }
 }

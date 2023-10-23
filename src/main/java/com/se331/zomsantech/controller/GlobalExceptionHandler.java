@@ -1,9 +1,6 @@
 package com.se331.zomsantech.controller;
 
-import com.se331.zomsantech.exception.ResourceNotFoundException;
-import com.se331.zomsantech.exception.StudentNotFoundException;
-import com.se331.zomsantech.exception.TeacherNotFoundException;
-import com.se331.zomsantech.exception.UserNotFoundException;
+import com.se331.zomsantech.exception.*;
 import com.se331.zomsantech.security.auth.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,5 +38,11 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handleTeacherNotFoundException(TeacherNotFoundException ex) {
         ErrorResponse errorDetails = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(RelationException.class)
+    public ResponseEntity<?> handleRelationException(RelationException ex) {
+        ErrorResponse errorDetails = new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
+        return new ResponseEntity<>(errorDetails, HttpStatus.CONFLICT);
     }
 }

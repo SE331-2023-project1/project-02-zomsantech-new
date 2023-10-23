@@ -16,4 +16,6 @@ public interface TeacherDao {
     Teacher getTeacher(Long id);
 
     User updateTeacher(Long id, User updatedUser);
+
+    Teacher addStudent(Integer studentId, Integer teacherId);
 }
