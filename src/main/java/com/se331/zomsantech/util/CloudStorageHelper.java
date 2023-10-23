@@ -5,6 +5,7 @@ import com.google.cloud.storage.Acl;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
+import com.se331.zomsantech.exception.FileSizeException;
 import jakarta.servlet.ServletException;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
@@ -46,6 +47,11 @@ public class CloudStorageHelper {
             int bytesRead = is.read(readBuf);
             os.write(readBuf, 0, bytesRead);
         }
+
+        long maxSize = 5 * 1024 * 1024; // 5 MB
+        if (filePart.getSize() > maxSize) {
+            throw new FileSizeException("File size exceeds the allowable limit");
+        }
         BlobInfo blobInfo = storage.create(BlobInfo.newBuilder(bucketName, fileName)
                 .setAcl(new ArrayList<>(Arrays.asList(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER))))
                 .setContentType(filePart.getContentType()).build(), os.toByteArray());
@@ -57,6 +63,8 @@ public class CloudStorageHelper {
         if (fileName != null && !fileName.isEmpty() && fileName.contains(".")) {
             final String extension = fileName.substring(fileName.lastIndexOf('.')+ 1);
             String[] allowedExt = { "jpg", "jpeg", "png", "gif" };
+
+
 //            for (String s : allowedExt) {
 //                if (extension.equals(s)) {
                     return this.uploadFile(file, bucket);

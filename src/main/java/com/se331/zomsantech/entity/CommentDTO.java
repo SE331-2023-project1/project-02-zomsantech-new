@@ -12,10 +12,15 @@ import lombok.NoArgsConstructor;
 public class CommentDTO {
     Long id;
     String content;
-    Long studentId;
-    Long teacherId;
-
     CommentDTO reply;
+
+    Long teacherId;
+    String teacherImage;
+    String teacherFirstName;
+
+    Long studentId;
+    String studentImage;
+    String studentFirstName;
 
 
 }

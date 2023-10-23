@@ -63,7 +63,11 @@ public interface LabMapper {
     AnnouncementDTO getAnnouncementDTO(Announcement announcement);
 
     @Mapping(source = "student.id", target = "studentId")
+    @Mapping(source = "student.user.firstname", target = "studentFirstName")
+    @Mapping(source = "student.user.image", target = "studentImage")
     @Mapping(source = "teacher.id", target = "teacherId")
+    @Mapping(source = "teacher.user.firstname", target = "teacherFirstName")
+    @Mapping(source = "teacher.user.image", target = "teacherImage")
     CommentDTO commentToCommentDTO(Comment comment);
 //    CommentDTO commentToCommentDTO(Comment comment);
 
