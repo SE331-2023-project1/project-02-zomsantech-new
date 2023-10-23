@@ -88,9 +88,9 @@ public class TeacherDaoDbImpl implements TeacherDao {
 
 
         if(student.isPresent() && teacher.isPresent()) {
-            if (student.get().getTeacher() != null) {
-                throw new RelationException("This Student Already Have Advisor");
-            }
+//            if (student.get().getTeacher() != null) {
+//                throw new RelationException("This Student Already Have Advisor");
+//            }
             Student student_pre = student.get();
             Teacher teacher_pre = teacher.get();
 

@@ -133,9 +133,11 @@ public class UserController {
             pageOutput = teacherRepository.findById(idFilter,PageRequest.of(page - 1, perPage) );
         }
         else if (filter != null) {
-            pageOutput = teacherService.getTeachers(perPage, page);
-        } else {
             pageOutput = teacherService.getTeachers(filter, PageRequest.of(page - 1, perPage));
+
+        } else {
+            pageOutput = teacherService.getTeachers(perPage, page);
+
         }
         HttpHeaders responseHeader = new HttpHeaders();
         responseHeader.set("x-total-count", String.valueOf(pageOutput.getTotalElements()));
