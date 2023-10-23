@@ -16,4 +16,4 @@ COPY ${DEPENDENCY}/BOOT-INF/classes /app
 
 
 ENTRYPOINT ["java" ,   "-Dspring.profiles.active=${JAVA_PROFILE}",\
-           "-cp","app:app/lib/*","se331.lab.rest.ZomsantechApplication"]
+           "-cp","app:app/lib/*","com.se331.zomsantech.ZomsantechApplication"]
