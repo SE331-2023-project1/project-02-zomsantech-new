@@ -31,4 +31,6 @@ public class Comment {
     @JoinColumn(name = "parent_comment_id")
     Comment parentComment;
 
+
+
 }
