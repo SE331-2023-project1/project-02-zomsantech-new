@@ -23,7 +23,7 @@ public class CommentController {
     @Autowired
     private CommentRepository commentRepository;
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<CommentDTO> createComment(@RequestParam Long studentId, @RequestParam Long teacherId, @RequestBody CommentRequest request) {
         String content = request.getContent();
         CommentDTO commentDTO = LabMapper.INSTANCE.commentToCommentDTO(commentService.createComment(studentId, teacherId, content));
@@ -34,8 +34,8 @@ public class CommentController {
         }
     }
 
-    @PostMapping("/{commentId}")
-    public ResponseEntity<CommentDTO> replyComment(@PathVariable Long commentId,@RequestParam Long studentId,@RequestParam Long teacherId,  @RequestBody CommentRequest request) {
+    @PostMapping("/reply")
+    public ResponseEntity<CommentDTO> replyComment(@RequestParam Long commentId,@RequestParam Long studentId,@RequestParam Long teacherId,  @RequestBody CommentRequest request) {
         String content = request.getContent();
         CommentDTO replyDTO = LabMapper.INSTANCE.commentToCommentDTO(commentService.replyComment(studentId, teacherId, commentId, content));
         if (replyDTO != null) {

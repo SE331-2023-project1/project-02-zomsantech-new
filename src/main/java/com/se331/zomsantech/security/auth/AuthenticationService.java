@@ -67,6 +67,10 @@ public class AuthenticationService {
                 .image(request.getImage())
                 .build();
 
+        if (request.getImage() == null) {
+            user.setImage("https://pbs.twimg.com/profile_images/1321030814436655106/87OcbZNm_400x400.jpg");
+        }
+
         var savedUser = repository.save(user);
 
         Student student = new Student();
@@ -107,6 +111,10 @@ public class AuthenticationService {
                 .roles(List.of(Role.ROLE_TEACHER))
                 .image(request.getImage())
                 .build();
+
+        if (request.getImage() == null) {
+            advisor.setImage("https://pbs.twimg.com/profile_images/1321030814436655106/87OcbZNm_400x400.jpg");
+        }
 
         Teacher teacher = new Teacher();
         teacher.setUser(advisor);

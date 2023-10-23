@@ -4,6 +4,8 @@ package com.se331.zomsantech.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Data
 @Builder
 @Entity
@@ -22,7 +24,11 @@ public class Announcement {
     String title;
     String description;
     String date;
-    String file;
+    String image;
+
+    @ElementCollection
+    @Column(length = 1000)
+    List<String> images;
 
 
 }

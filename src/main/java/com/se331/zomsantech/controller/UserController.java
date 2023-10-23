@@ -55,21 +55,43 @@ public class UserController {
     @GetMapping("/students")
     public ResponseEntity<?> getAllStudents(@RequestParam(value = "_limit", required = false) Integer perPage,
                                             @RequestParam(value = "_page", required = false) Integer page,
-                                            @RequestParam(value = "_filter", required = false) String filter) {
+                                            @RequestParam(value = "_filter", required = false) String filter,
+                                            @RequestParam(value = "_haveNoTeacher", required = false) Boolean haveNoTeacher) {
         perPage = perPage == null ? 20 : perPage;
         page = page == null ? 1 : page;
         Page<Student> pageOutput;
-        if (filter == null) {
-            pageOutput = studentService.getStudents(perPage, page);
-        } else {
-            pageOutput = studentService.getStudents(filter, PageRequest.of(page - 1, perPage));
+
+        Long idFilter = null;
+        if (filter != null && filter.matches("\\d+")) {
+            idFilter = Long.parseLong(filter);
         }
+
+
+        if (idFilter != null) {
+            pageOutput = studentRepository.findById(idFilter,PageRequest.of(page - 1, perPage) );
+        } else if (filter != null) {
+            pageOutput = studentService.getStudents(filter, PageRequest.of(page - 1, perPage));
+        } else {
+            pageOutput = studentService.getStudents(perPage, page);
+        }
+
+        if (haveNoTeacher != null) {
+            pageOutput = studentService.getStudentTeacherIsNull(perPage, page);
+        }
+
         HttpHeaders responseHeader = new HttpHeaders();
         responseHeader.set("x-total-count", String.valueOf(pageOutput.getTotalElements()));
         return new ResponseEntity<>(pageOutput.getContent().stream()
                 .map(LabMapper.INSTANCE::getStudentDTO)
                 .collect(Collectors.toList()), responseHeader, HttpStatus.OK);
 
+    }
+
+    @PutMapping("/relation")
+    public ResponseEntity<?> changeRelation(@RequestParam(value = "teacherId") Integer teacherId,
+                                            @RequestParam(value = "studentId") Integer studentId) {
+        ;
+    return ResponseEntity.ok(LabMapper.INSTANCE.getTeacherDTO(teacherService.addStudent(studentId,teacherId)));
     }
 
     @GetMapping("/students/{id}")
@@ -102,10 +124,20 @@ public class UserController {
         page = page == null ? 1 : page;
         Page<Teacher> pageOutput;
 
-        if (filter == null) {
-            pageOutput = teacherService.getTeachers(perPage, page);
-        } else {
+        Long idFilter = null;
+        if (filter != null && filter.matches("\\d+")) {
+            idFilter = Long.parseLong(filter);
+        }
+
+        if (idFilter != null) {
+            pageOutput = teacherRepository.findById(idFilter,PageRequest.of(page - 1, perPage) );
+        }
+        else if (filter != null) {
             pageOutput = teacherService.getTeachers(filter, PageRequest.of(page - 1, perPage));
+
+        } else {
+            pageOutput = teacherService.getTeachers(perPage, page);
+
         }
         HttpHeaders responseHeader = new HttpHeaders();
         responseHeader.set("x-total-count", String.valueOf(pageOutput.getTotalElements()));

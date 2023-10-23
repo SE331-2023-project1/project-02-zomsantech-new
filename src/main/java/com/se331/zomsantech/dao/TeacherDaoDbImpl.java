@@ -1,11 +1,14 @@
 package com.se331.zomsantech.dao;
 
+import com.se331.zomsantech.entity.Student;
 import com.se331.zomsantech.entity.Teacher;
+import com.se331.zomsantech.exception.RelationException;
+import com.se331.zomsantech.exception.TeacherNotFoundException;
+import com.se331.zomsantech.repository.StudentRepository;
 import com.se331.zomsantech.repository.TeacherRepository;
 import com.se331.zomsantech.security.user.User;
 import com.se331.zomsantech.security.user.UserRepository;
 import com.se331.zomsantech.util.CloudStorageHelper;
-import jakarta.servlet.ServletException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -13,10 +16,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -24,6 +25,7 @@ import java.util.List;
 public class TeacherDaoDbImpl implements TeacherDao {
     final TeacherRepository teacherRepository;
     final UserRepository userRepository;
+    final StudentRepository studentRepository;
     @Autowired
     private CloudStorageHelper cloudStorageHelper;
     @Override
@@ -78,4 +80,28 @@ public class TeacherDaoDbImpl implements TeacherDao {
                 })
                 .orElse(null);
     }
+
+    @Override
+    public Teacher addStudent(Integer studentId, Integer teacherId) {
+        Optional<Student> student = studentRepository.findById(studentId.longValue());
+        Optional<Teacher> teacher = teacherRepository.findById(teacherId.longValue());
+
+
+        if(student.isPresent() && teacher.isPresent()) {
+//            if (student.get().getTeacher() != null) {
+//                throw new RelationException("This Student Already Have Advisor");
+//            }
+            Student student_pre = student.get();
+            Teacher teacher_pre = teacher.get();
+
+            student_pre.setTeacher(teacher_pre);
+            teacher_pre.getOwnStudent().add(student_pre);
+            studentRepository.save(student_pre);
+            teacherRepository.save(teacher_pre);
+            return teacher_pre;
+        }
+//        return new RelationException("This Student Already Have Advisor");
+        return null;
+    }
+
 }

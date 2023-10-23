@@ -34,7 +34,7 @@ public interface LabMapper {
     DetailedTeacherDTO getDetailedTeacherDTO(Teacher teacher);
 
     @Mapping(source = "user.firstname", target = "name")
-    @Mapping(source = "user.id", target = "id")
+    @Mapping(source = "student.id", target = "id")
     @Mapping(source = "user.lastname", target = "surname")
     @Mapping(source = "user.image", target = "image")
     @Mapping(source = "user.email", target = "email")
